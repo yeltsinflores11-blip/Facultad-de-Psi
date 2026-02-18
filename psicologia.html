@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UNICA - Psicologia general I (Psicología)</title>
+    <style>
+        :root {
+            --bg-dark: #1a1d29;
+            --card-dark: #24283b;
+            --unica-orange: #ff8c00;
+            --unica-blue: #4299e1;
+            --unica-red: #d94132;
+            --text-gray: #8a8d9b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid #333;
+        }
+
+        .btn-back {
+            background-color: transparent;
+            color: var(--unica-orange);
+            border: 1px solid var(--unica-orange);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: var(--unica-orange);
+            color: white;
+        }
+
+        /* --- NAVEGACIÓN DE PESTAÑAS --- */
+        .course-nav {
+            display: flex;
+            justify-content: center;
+            background: var(--card-dark);
+            padding: 5px 0;
+            border-bottom: 1px solid #3d445e;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--unica-blue);
+            border-bottom: 3px solid var(--unica-blue);
+        }
+
+        /* --- CONTENEDOR DE UNIDADES (ACORDEONES) --- */
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        
+        .unit-title { margin-bottom: 25px; font-size: 24px; }
+        .unit-title span { color: var(--unica-orange); }
+
+        .accordion-item {
+            background: var(--card-dark);
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #3d445e;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px;
+            background: #2d324d;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 10px 0;
+            background: #1e2235;
+        }
+
+        .topic {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            border-bottom: 1px solid #2d324d;
+            color: #bdc3c7;
+            font-size: 14px;
+        }
+
+        .topic:last-child { border-bottom: none; }
+        
+        .topic::before {
+            content: "📄";
+            margin-right: 15px;
+            color: var(--unica-blue);
+        }
+
+        /* BOTÓN EDITAR (SOLO PROFESOR) */
+        .btn-edit {
+            background: var(--unica-orange);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .tareas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tarea-card {
+    background: var(--card-dark);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #3d445e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tarea-info h4 { margin: 0; color: var(--unica-orange); }
+.tarea-info p { margin: 5px 0; font-size: 13px; color: var(--text-gray); }
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-pendiente { background: rgba(255, 193, 7, 0.1); color: #ffc107; border: 1px solid #ffc107; }
+.status-entregado { background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid #28a745; }
+
+.btn-entregar {
+    background: var(--unica-blue);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.examenes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.examen-card {
+    background: linear-gradient(145deg, #1e2130, #161924);
+    border-left: 5px solid var(--unica-orange);
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.examen-card h4 { color: white; margin-bottom: 10px; }
+.examen-card p { font-size: 13px; color: var(--text-gray); margin: 3px 0; }
+
+.btn-start-exam {
+    background: transparent;
+    border: 1px solid var(--unica-orange);
+    color: var(--unica-orange);
+    padding: 8px 0;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-start-exam:hover {
+    background: var(--unica-orange);
+    color: white;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    background: var(--card-dark);
+    border-radius: 10px;
+    border: 1px solid #3d445e;
+}
+
+.notas-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    text-align: left;
+}
+
+.notas-table th {
+    background: #1a1d29;
+    padding: 15px;
+    border-bottom: 2px solid var(--unica-blue);
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.notas-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #3d445e;
+    font-size: 14px;
+}
+
+.notas-table tr:hover { background: rgba(255,255,255,0.05); }
+
+.input-nota {
+    width: 50px;
+    background: #1a1d29;
+    border: 1px solid #4e5569;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.nota-aprobado { color: #28a745; font-weight: bold; }
+.nota-desaprobado { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <button class="btn-back" onclick="window.location.href='dashboard.html'">← Panel</button>
+            <div style="font-size: 20px; font-weight: bold;">Psicología General <span style="font-weight: normal; color: var(--text-gray);">| I Ciclo</span></div>
+        </div>
+        <div id="userDisplay" style="color: var(--unica-red); font-weight: bold; text-transform: uppercase; font-size: 13px;"></div>
+    </header>
+
+    <nav class="course-nav">
+        <button class="tab-btn active">Unidades</button>
+        <button class="tab-btn">Materiales</button>
+        <button class="tab-btn">Tareas</button>
+        <button class="tab-btn">Exámenes</button>
+        <button class="tab-btn">Calificaciones</button>
+    </nav>
+
+    <div id="main-content">
+    <div id="unidadesContent" class="container">
+        <h2 class="unit-title">Unidades del <span>Curso</span></h2>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 1: NÚMEROS REALES Y FUNCIONES</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Ecuaciones e Inecuaciones</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Ecuaciones e Inecuaciones con Radicales</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Ecuaciones e Inecuaciones con Valor Absoluto</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 2: LIMITES DE FUNCIONES</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Limites de funciones reales</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Funciones continuas</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 3: DERIVADAS</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Derivadas de funciones reales</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Práctica de funciones continuas</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 4: APLICACIONES DE LA DERIVADA</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Derivadas de orden superior. Regla de L'Hospital</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Valores máximos y mínimos de una función</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="materialesContent" class="container" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 class="unit-title" style="margin:0;">Materiales del <span>Curso</span></h2>
+            <button id="btnSubirMaterial" class="btn-save" style="display:none;" onclick="openMaterialModal()">+ Subir Material</button>
+        </div>
+        <div id="listaMateriales" class="materials-grid">
+            <p id="noMateriales" style="color: var(--text-gray);">No hay materiales subidos aún.</p>
+        </div>
+    </div>
+</div>
+
+<div id="tareasContent" class="container" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 class="unit-title" style="margin:0;">Tareas del <span>Curso</span></h2>
+        <button id="btnCrearTarea" class="btn-save" style="display:none;" onclick="openTareaModal()">+ Crear Nueva Tarea</button>
+    </div>
+
+    <div id="listaTareas" class="tareas-list">
+        </div>
+</div>
+
+<div id="tareaModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Nueva Tarea</h3>
+        <input type="text" id="tareaTitle" placeholder="Título de la tarea (Ej: Tarea 01: Inecuaciones)">
+        <textarea id="tareaDesc" placeholder="Descripción o instrucciones..." style="width:100%; height:80px; background:#1a1d29; border:1px solid #3d445e; color:white; border-radius:8px; padding:10px; margin-top:10px;"></textarea>
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeTareaModal()">Cancelar</button>
+            <button class="btn-save" id="btnGuardarTarea">Publicar Tarea</button>
+        </div>
+    </div>
+</div>
+
+<div id="examenesContent" class="container" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 class="unit-title" style="margin:0;">Evaluaciones <span>Académicas</span></h2>
+        <button id="btnCrearExamen" class="btn-save" style="display:none;" onclick="openExamenModal()">+ Programar Examen</button>
+    </div>
+
+    <div id="listaExamenes" class="examenes-list">
+        </div>
+</div>
+
+<div id="examenModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Programar Nueva Evaluación</h3>
+        <input type="text" id="examenTitle" placeholder="Nombre del examen (Ej: Primer Parcial)">
+        
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <div style="flex: 1;">
+                <label style="color:var(--text-gray); font-size:11px;">Fecha:</label>
+                <input type="date" id="examenDate" style="width:100%; padding:8px; background:#1a1d29; border:1px solid #3d445e; color:white; border-radius:5px;">
+            </div>
+            <div style="flex: 1;">
+                <label style="color:var(--text-gray); font-size:11px;">Duración (min):</label>
+                <input type="number" id="examenDuration" placeholder="90" style="width:100%; padding:8px; background:#1a1d29; border:1px solid #3d445e; color:white; border-radius:5px;">
+            </div>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeExamenModal()">Cancelar</button>
+            <button class="btn-save" id="btnGuardarExamen">Publicar Examen</button>
+        </div>
+    </div>
+</div>
+
+<div id="calificacionesContent" class="container" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 class="unit-title" style="margin:0;">Registro de <span>Notas 2026-I</span></h2>
+        <button class="btn-save" style="background-color: #28a745;" onclick="exportarExcel()">📗 Descargar Excel</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="notas-table">
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>Tarea 01</th>
+                    <th>Parcial I</th>
+                    <th>Parcial II</th>
+                    <th>Promedio</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tablaNotasBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+
+<style>
+    /* Estilos adicionales para los botones de temas */
+    .topic {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 30px;
+        border-bottom: 1px solid #2d324d;
+        transition: 0.2s;
+    }
+
+    .topic:hover { background: rgba(255,255,255,0.03); }
+
+    .btn-edit-unit {
+        background: var(--unica-orange);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+        display: none; /* Se activa por JS */
+    }
+
+    .btn-edit-topic {
+        background: #3d445e;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 10px;
+        display: none; /* Se activa por JS */
+        transition: 0.3s;
+    }
+
+    .btn-edit-topic:hover { background: var(--unica-blue); }
+
+    /* Estilos del Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* Se activa con JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--card-dark);
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    border: 1px solid #3d445e;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.modal-content h3 { margin-top: 0; color: var(--unica-orange); }
+
+#editInput {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0;
+    background: #1a1d29;
+    border: 1px solid #3d445e;
+    color: white;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.modal-buttons { display: flex; gap: 10px; justify-content: center; }
+
+.btn-save {
+    background: var(--unica-blue);
+    color: white; border: none;
+    padding: 10px 20px; border-radius: 8px;
+    cursor: pointer; font-weight: bold;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: var(--text-gray); border: 1px solid #3d445e;
+    padding: 10px 20px; border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Cuadrícula de materiales */
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.material-card {
+    background: var(--card-dark);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #3d445e;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.material-card:hover {
+    border-color: var(--unica-blue);
+    transform: translateY(-3px);
+}
+
+.material-icon {
+    font-size: 28px;
+    background: rgba(217, 65, 50, 0.1); /* Fondo rojizo suave */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.material-info h4 {
+    margin: 0;
+    font-size: 15px;
+    color: #e2e8f0;
+}
+
+.material-info p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--text-gray);
+}
+
+.btn-delete-mat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.btn-delete-mat:hover { opacity: 1; }
+
+.btn-download {
+    margin-left: auto;
+    color: var(--unica-blue);
+    text-decoration: none;
+    font-size: 18px;
+}
+</style>
+
+
+   <script>
+    // ==========================================
+    // 1. CONFIGURACIÓN DEL CURSO (¡ESTO ES CLAVE!)
+    // ==========================================
+    const ID_CURSO = "PSI"; // <--- CAMBIA ESTO A "EST" EN EL OTRO ARCHIVO
+
+    // --- LISTA OFICIAL DE ALUMNOS UNICA ---
+    const usuarios = [
+        { code: "202401", name: "Chavez, Kaysin", role: "Alumno" },
+        { code: "202402", name: "Aguirre, Tatiana", role: "Alumno" },
+        { code: "202403", name: "Benitez, Jorge", role: "Alumno" },
+        { code: "202404", name: "Castillo, Pedro", role: "Alumno" },
+        { code: "202405", name: "Diaz, Ana", role: "Alumno" },
+        { code: "202406", name: "Espinoza, Luis", role: "Alumno" },
+        { code: "202407", name: "Fernandez, Sofia", role: "Alumno" },
+        { code: "202408", name: "Garcia, Miguel", role: "Alumno" },
+        { code: "202409", name: "Hernandez, Jose", role: "Alumno" },
+        { code: "202410", name: "Iglesias, Carmen", role: "Alumno" },
+        { code: "202411", name: "Jimenez, Raul", role: "Alumno" },
+        { code: "202412", name: "Lopez, Elena", role: "Alumno" },
+        { code: "202413", name: "Martinez, Carlos", role: "Alumno" },
+        { code: "202414", name: "Nuñez, Patricia", role: "Alumno" },
+        { code: "202415", name: "Ortega, David", role: "Alumno" },
+        { code: "202416", name: "Perez, Juan", role: "Alumno" },
+        { code: "202417", name: "Quispe, Rosa", role: "Alumno" },
+        { code: "202418", name: "Ramirez, Fernando", role: "Alumno" },
+        { code: "202419", name: "Sanchez, Lucía", role: "Alumno" },
+        { code: "202420", name: "Torres, Manuel", role: "Alumno" },
+        { code: "profesor", name: "DR. RICARDO PALOMINO", role: "Psicología" }
+    ];
+
+    // ==========================================
+    // 2. BASES DE DATOS DINÁMICAS (SEPARADAS POR CURSO)
+    // ==========================================
+    // Nota: Usamos comillas invertidas ` ` para que funcione el ID_CURSO
+    let materialesDB = JSON.parse(localStorage.getItem(`db_materiales_${ID_CURSO}`)) || [];
+    let tareasDB = JSON.parse(localStorage.getItem(`db_tareas_${ID_CURSO}`)) || [];
+    let examenesDB = JSON.parse(localStorage.getItem(`db_examenes_${ID_CURSO}`)) || [];
+    // Nota: Las calificaciones también se separan por curso
+    let calificacionesDB = JSON.parse(localStorage.getItem(`db_notas_${ID_CURSO}`)) || []; 
+    
+    // Configuración para guardar el texto de las unidades
+    let elementToEdit = null; 
+    const storageKeyUnidades = `unidades_texto_${ID_CURSO}`; 
+
+    // ==========================================
+    // 3. INICIO DE SESIÓN Y CARGA
+    // ==========================================
+    window.onload = function() {
+        const nombre = localStorage.getItem('usuarioNombre');
+        const rol = localStorage.getItem('usuarioRol');
+        
+        if(nombre) {
+            document.getElementById('userDisplay').innerText = nombre;
+            cargarCambiosUnidades();
+            verificarPermisos(rol);
+        } else {
+            window.location.href = "index.html";
+        }
+    };
+
+    function verificarPermisos(rol) {
+        const displayStyle = (rol !== "Alumno") ? 'block' : 'none';
+        document.querySelectorAll('.btn-edit-unit').forEach(b => b.style.display = displayStyle);
+        document.querySelectorAll('.btn-edit-topic').forEach(b => b.style.display = displayStyle);
+    }
+
+    // ==========================================
+    // 4. NAVEGACIÓN POR PESTAÑAS (TABS)
+    // ==========================================
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.onclick = function() {
+            // Estética
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            // OCULTAR TODO (Limpieza)
+            document.getElementById('unidadesContent').style.display = "none";
+            document.getElementById('materialesContent').style.display = "none";
+            document.getElementById('tareasContent').style.display = "none";
+            document.getElementById('examenesContent').style.display = "none";       
+            document.getElementById('calificacionesContent').style.display = "none"; 
+
+            // MOSTRAR SELECCIÓN
+            const seccion = this.innerText.toUpperCase().trim();
+            const rol = localStorage.getItem('usuarioRol');
+            const esProfesor = (rol !== "Alumno");
+
+            if (seccion === "UNIDADES") {
+                document.getElementById('unidadesContent').style.display = "block";
+            } 
+            else if (seccion === "MATERIALES") {
+                document.getElementById('materialesContent').style.display = "block";
+                const btnSubir = document.getElementById('btnSubirMaterial');
+                if(btnSubir) btnSubir.style.display = esProfesor ? 'block' : 'none';
+                renderizarMateriales();
+            } 
+            else if (seccion === "TAREAS") {
+                document.getElementById('tareasContent').style.display = "block";
+                const btnCrear = document.getElementById('btnCrearTarea');
+                if(btnCrear) btnCrear.style.display = esProfesor ? 'block' : 'none';
+                renderizarTareas();
+            }
+            else if (seccion === "EXÁMENES" || seccion === "EXAMENES") {
+                document.getElementById('examenesContent').style.display = "block";
+                const btnExamen = document.getElementById('btnCrearExamen');
+                if(btnExamen) btnExamen.style.display = esProfesor ? 'block' : 'none';
+                renderizarExamenes();
+            }
+            else if (seccion === "CALIFICACIONES") {
+                document.getElementById('calificacionesContent').style.display = "block";
+                renderizarCalificaciones();
+            }
+        };
+    });
+
+    // ==========================================
+    // 5. LÓGICA DE UNIDADES (TEXTOS)
+    // ==========================================
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const isOpen = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+    }
+
+    function editUnit(event, btn) {
+        event.stopPropagation();
+        const span = btn.parentElement.querySelector('.unit-text');
+        openModal(span, "Unidad");
+    }
+
+    function editTopic(btn) {
+        const span = btn.parentElement.querySelector('.topic-text');
+        openModal(span, "Tema");
+    }
+
+    function guardarEnMemoriaUnidades() {
+        const containerContent = document.querySelector('#unidadesContent').innerHTML;
+        localStorage.setItem(storageKeyUnidades, containerContent);
+    }
+
+    function cargarCambiosUnidades() {
+        const contenidoGuardado = localStorage.getItem(storageKeyUnidades);
+        const container = document.getElementById('unidadesContent');
+        if (contenidoGuardado && container) {
+            container.innerHTML = contenidoGuardado;
+        }
+    }
+
+    // ==========================================
+    // 6. GESTIÓN DE MODALES
+    // ==========================================
+    function openModal(textElement, type) {
+        elementToEdit = textElement;
+        const modal = document.getElementById('editModal');
+        const input = document.getElementById('editInput');
+        modal.style.display = 'flex';
+        input.value = textElement.innerText;
+        document.getElementById('modalInfo').innerText = "Editando " + type;
+        setTimeout(() => input.focus(), 100);
+    }
+
+    function openMaterialModal() { document.getElementById('materialModal').style.display = 'flex'; }
+    function openTareaModal() { document.getElementById('tareaModal').style.display = 'flex'; }
+    function openExamenModal() { document.getElementById('examenModal').style.display = 'flex'; }
+
+    function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+    function closeMaterialModal() { document.getElementById('materialModal').style.display = 'none'; }
+    function closeTareaModal() { document.getElementById('tareaModal').style.display = 'none'; }
+    function closeExamenModal() { document.getElementById('examenModal').style.display = 'none'; }
+
+
+    // ==========================================
+    // 7. LISTENER GLOBAL (CORAZÓN DEL SISTEMA)
+    // ==========================================
+    document.addEventListener('click', function(e) {
+        const id = e.target.id;
+
+        // Guardar Texto Unidades
+        if (id === 'saveBtn') {
+            const newValue = document.getElementById('editInput').value;
+            if (newValue && elementToEdit) {
+                elementToEdit.innerText = elementToEdit.classList.contains('unit-text') ? newValue.toUpperCase() : newValue;
+                guardarEnMemoriaUnidades();
+                closeModal();
+            }
+        }
+        // Guardar Material
+        if (id === 'btnGuardarMaterial') { ejecutarPublicacionMaterial(); }
+        // Guardar Tarea
+        if (id === 'btnGuardarTarea') { ejecutarPublicacionTarea(); }
+        // Guardar Examen
+        if (id === 'btnGuardarExamen') { ejecutarPublicacionExamen(); }
+
+        // Botones Cancelar
+        if (e.target.classList.contains('btn-cancel')) {
+            closeModal();
+            closeMaterialModal();
+            closeTareaModal();
+            closeExamenModal();
+        }
+    });
+
+    // ==========================================
+    // 8. FUNCIONES: MATERIALES
+    // ==========================================
+    function ejecutarPublicacionMaterial() {
+        const titulo = document.getElementById('matTitleInput').value;
+        const fileInput = document.getElementById('fileInput');
+        
+        if (titulo.trim() !== "" && fileInput.files.length > 0) {
+            const nuevoMaterial = {
+                id: Date.now(),
+                titulo: titulo,
+                archivoOriginal: fileInput.files[0].name,
+                fecha: new Date().toLocaleDateString()
+            };
+            materialesDB.push(nuevoMaterial);
+            // GUARDADO DINÁMICO
+            localStorage.setItem(`db_materiales_${ID_CURSO}`, JSON.stringify(materialesDB));
+            
+            document.getElementById('matTitleInput').value = "";
+            fileInput.value = ""; 
+            closeMaterialModal();
+            renderizarMateriales();
+        } else {
+            alert("Error: Debe asignar un título y seleccionar un archivo PDF.");
+        }
+    }
+
+    function renderizarMateriales() {
+        const lista = document.getElementById('listaMateriales');
+        const rol = localStorage.getItem('usuarioRol');
+        
+        if (materialesDB.length === 0) {
+            lista.innerHTML = "<p style='color:gray; text-align:center; padding:20px;'>No hay materiales disponibles.</p>";
+            return;
+        }
+
+        lista.innerHTML = materialesDB.map(m => `
+            <div class="material-card">
+                <div class="material-icon">📕</div>
+                <div class="material-info">
+                    <h4>${m.titulo}</h4>
+                    <p style="color:var(--unica-blue); font-weight:500; font-size:13px;">📄 ${m.archivoOriginal}</p>
+                    <p style="font-size:11px; opacity:0.7;">Fecha: ${m.fecha}</p>
+                </div>
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <a href="#" class="btn-download" onclick="alert('Descarga simulada iniciada...')">📥</a>
+                    ${rol !== 'Alumno' ? `<button class="btn-delete-mat" onclick="eliminarMaterial(${m.id})">🗑️</button>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function eliminarMaterial(id) {
+        if(confirm("¿Eliminar este material?")) {
+            materialesDB = materialesDB.filter(m => m.id !== id);
+            localStorage.setItem(`db_materiales_${ID_CURSO}`, JSON.stringify(materialesDB));
+            renderizarMateriales();
+        }
+    }
+
+    // ==========================================
+    // 9. FUNCIONES: TAREAS
+    // ==========================================
+    function ejecutarPublicacionTarea() {
+        const titulo = document.getElementById('tareaTitle').value;
+        const desc = document.getElementById('tareaDesc').value;
+        
+        if(titulo.trim() && desc.trim()) {
+            const nuevaTarea = {
+                id: Date.now(),
+                titulo: titulo,
+                descripcion: desc,
+                estado: 'Pendiente'
+            };
+            tareasDB.push(nuevaTarea);
+            // GUARDADO DINÁMICO
+            localStorage.setItem(`db_tareas_${ID_CURSO}`, JSON.stringify(tareasDB));
+            
+            document.getElementById('tareaTitle').value = "";
+            document.getElementById('tareaDesc').value = "";
+            closeTareaModal();
+            renderizarTareas();
+        } else {
+            alert("Complete todos los campos de la tarea.");
+        }
+    }
+
+    function renderizarTareas() {
+        const lista = document.getElementById('listaTareas');
+        const rol = localStorage.getItem('usuarioRol');
+        
+        if (tareasDB.length === 0) {
+            lista.innerHTML = "<p style='color:gray; text-align:center; padding:20px;'>No hay tareas pendientes.</p>";
+            return;
+        }
+
+        lista.innerHTML = tareasDB.map(t => `
+            <div class="tarea-card">
+                <div class="tarea-info">
+                    <h4>${t.titulo}</h4>
+                    <p>${t.descripcion}</p>
+                    <span class="status-badge ${t.estado === 'Pendiente' ? 'status-pendiente' : 'status-entregado'}">${t.estado}</span>
+                </div>
+                <div class="tarea-actions">
+                    ${rol === 'Alumno' && t.estado === 'Pendiente' ? 
+                        `<button class="btn-entregar" onclick="entregarTarea(${t.id})">Subir Trabajo</button>` : ''}
+                    ${rol !== 'Alumno' ? `<button class="btn-delete-mat" onclick="eliminarTarea(${t.id})">🗑️</button>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function entregarTarea(id) {
+        const archivo = prompt("Nombre del archivo a entregar (Simulación):", "Tarea_Resuelta.pdf");
+        if(archivo) {
+            tareasDB = tareasDB.map(t => t.id === id ? {...t, estado: 'Entregado'} : t);
+            localStorage.setItem(`db_tareas_${ID_CURSO}`, JSON.stringify(tareasDB));
+            renderizarTareas();
+            alert("¡Tarea entregada correctamente!");
+        }
+    }
+
+    function eliminarTarea(id) {
+        if(confirm("¿Eliminar esta tarea?")) {
+            tareasDB = tareasDB.filter(t => t.id !== id);
+            localStorage.setItem(`db_tareas_${ID_CURSO}`, JSON.stringify(tareasDB));
+            renderizarTareas();
+        }
+    }
+
+    // ==========================================
+    // 10. FUNCIONES: EXÁMENES
+    // ==========================================
+    function ejecutarPublicacionExamen() {
+        const titulo = document.getElementById('examenTitle').value;
+        const fecha = document.getElementById('examenDate').value;
+        const duracion = document.getElementById('examenDuration').value;
+
+        if (titulo && fecha && duracion) {
+            examenesDB.push({
+                id: Date.now(),
+                titulo: titulo,
+                fecha: fecha,
+                duracion: duracion,
+                estado: 'Programado'
+            });
+            // GUARDADO DINÁMICO
+            localStorage.setItem(`db_examenes_${ID_CURSO}`, JSON.stringify(examenesDB));
+            closeExamenModal();
+            renderizarExamenes();
+        } else {
+            alert("Complete todos los campos del examen.");
+        }
+    }
+
+    function renderizarExamenes() {
+        const lista = document.getElementById('listaExamenes');
+        const rol = localStorage.getItem('usuarioRol');
+        
+        if (examenesDB.length === 0) {
+            lista.innerHTML = "<p style='color:gray; text-align:center; width:100%;'>No hay exámenes programados aún.</p>";
+            return;
+        }
+
+        lista.innerHTML = examenesDB.map(ex => `
+            <div class="examen-card">
+                <h4>${ex.titulo}</h4>
+                <p>📅 Fecha: ${ex.fecha}</p>
+                <p>⏳ Duración: ${ex.duracion} minutos</p>
+                <p>🔔 Estado: <span style="color:var(--unica-orange)">${ex.estado}</span></p>
+                
+                ${rol === 'Alumno' ? 
+                    `<button class="btn-start-exam" onclick="alert('El examen se habilitará en la fecha programada.')">Rendir Examen</button>` : 
+                    `<button class="btn-delete-mat" style="margin-top:10px" onclick="eliminarExamen(${ex.id})">🗑️ Eliminar</button>`
+                }
+            </div>
+        `).join('');
+    }
+
+    function eliminarExamen(id) {
+        if(confirm("¿Eliminar evaluación?")) {
+            examenesDB = examenesDB.filter(ex => ex.id !== id);
+            localStorage.setItem(`db_examenes_${ID_CURSO}`, JSON.stringify(examenesDB));
+            renderizarExamenes();
+        }
+    }
+
+    // ==========================================
+    // 11. FUNCIONES: CALIFICACIONES (NOTAS)
+    // ==========================================
+    function obtenerCalificacionesActualizadas() {
+        // Alumnos oficiales
+        const listaAlumnos = usuarios.filter(u => u.role === 'Alumno');
+        
+        // Notas guardadas (DINÁMICO)
+        let notasGuardadas = JSON.parse(localStorage.getItem(`db_notas_${ID_CURSO}`)) || [];
+
+        // Cruce de datos
+        return listaAlumnos.map(alumno => {
+            const notaExistente = notasGuardadas.find(n => n.name === alumno.name);
+            return notaExistente || { 
+                name: alumno.name, 
+                code: alumno.code,
+                n1: 0, 
+                n2: 0, 
+                n3: 0 
+            };
+        });
+    }
+
+    function renderizarCalificaciones() {
+        const tbody = document.getElementById('tablaNotasBody');
+        if (!tbody) return;
+
+        const rolSesion = localStorage.getItem('usuarioRol');
+        const nombreSesion = localStorage.getItem('usuarioNombre');
+        const esProfesor = (rolSesion !== 'Alumno');
+        
+        let datos = obtenerCalificacionesActualizadas();
+        tbody.innerHTML = "";
+
+        datos.forEach((alum) => {
+            // SEGURIDAD: Alumno solo ve lo suyo
+            if (!esProfesor && alum.name !== nombreSesion) return;
+
+            const promedio = ((alum.n1 + alum.n2 + alum.n3) / 3).toFixed(1);
+            const estadoClass = promedio >= 10.5 ? 'nota-aprobado' : 'nota-desaprobado';
+            
+            tbody.innerHTML += `
+                <tr>
+                    <td><small style="color:gray">${alum.code}</small><br>${alum.name}</td>
+                    <td>${esProfesor ? `<input type="number" class="input-nota" value="${alum.n1}" onchange="actualizarNota('${alum.name}', 'n1', this.value)">` : alum.n1}</td>
+                    <td>${esProfesor ? `<input type="number" class="input-nota" value="${alum.n2}" onchange="actualizarNota('${alum.name}', 'n2', this.value)">` : alum.n2}</td>
+                    <td>${esProfesor ? `<input type="number" class="input-nota" value="${alum.n3}" onchange="actualizarNota('${alum.name}', 'n3', this.value)">` : alum.n3}</td>
+                    <td class="${estadoClass}">${promedio}</td>
+                    <td class="${estadoClass}">${promedio >= 10.5 ? 'APROBADO' : 'DESAPROBADO'}</td>
+                </tr>
+            `;
+        });
+    }
+
+    function actualizarNota(nombreAlumno, notaKey, valor) {
+        let notasGuardadas = JSON.parse(localStorage.getItem(`db_notas_${ID_CURSO}`)) || obtenerCalificacionesActualizadas();
+        const index = notasGuardadas.findIndex(n => n.name === nombreAlumno);
+        
+        if (index !== -1) {
+            notasGuardadas[index][notaKey] = parseFloat(valor) || 0;
+            // GUARDADO DINÁMICO
+            localStorage.setItem(`db_notas_${ID_CURSO}`, JSON.stringify(notasGuardadas));
+            renderizarCalificaciones();
+        }
+    }
+
+    function exportarExcel() {
+        const datos = obtenerCalificacionesActualizadas();
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent = "\ufeff" + "Código,Alumno,Tarea 01,Parcial I,Parcial II,Promedio,Estado\n";
+
+        datos.forEach(alum => {
+            const promedio = ((alum.n1 + alum.n2 + alum.n3) / 3).toFixed(1);
+            const estado = promedio >= 10.5 ? 'APROBADO' : 'DESAPROBADO';
+            csvContent += `${alum.code},${alum.name},${alum.n1},${alum.n2},${alum.n3},${promedio},${estado}\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Registro_Notas_${ID_CURSO}_2026.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+
+
+<div id="editModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Editar Elemento</h3>
+        <p id="modalInfo" style="font-size: 12px; color: var(--text-gray);"></p>
+        <input type="text" id="editInput" placeholder="Nuevo nombre...">
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+            <button class="btn-save" id="saveBtn">Guardar Cambios</button>
+        </div>
+    </div>
+</div>
+
+<div id="materialModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Subir Material de Clase</h3>
+        <p style="font-size: 13px; color: var(--text-gray);">Complete los datos del recurso</p>
+        
+        <input type="text" id="matTitleInput" placeholder="Ej: Lectura 01 - Números Reales">
+        
+        <div style="margin: 15px 0; text-align: left;">
+            <label style="font-size: 12px; color: var(--unica-orange); display: block; margin-bottom: 5px;">Seleccionar PDF:</label>
+            <input type="file" id="fileInput" accept=".pdf" style="font-size: 12px; color: white;">
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeMaterialModal()">Cancelar</button>
+            <button class="btn-save" id="btnGuardarMaterial">Publicar en Aula</button>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
+
