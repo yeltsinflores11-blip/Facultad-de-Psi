@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia | Facultad de Psicología</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #334155; line-height: 1.6; overflow-x: hidden; }
+
+        /* --- NAVEGACIÓN (IDÉNTICA AL INDEX) --- */
+        nav {
+            position: fixed; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9;
+        }
+        .logo { font-family: 'Lexend'; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { 
+            text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.95rem; 
+            transition: all 0.3s ease; display: inline-block;
+        }
+        .nav-links a:hover { color: var(--primary) !important; transform: scale(1.15); }
+        .nav-links a.active { color: var(--primary); font-weight: 700; }
+
+        /* --- HEADER HISTORIA --- */
+        .history-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), 
+                        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bDax89X_G_63MMLNIXLApTDJYtMXkiPHHA&s');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding-top: 80px;
+        }
+        .history-hero h1 { font-family: 'Lexend'; font-size: 3.5rem; }
+
+        /* --- SECCIONES DE HISTORIA (STORYTELLING) --- */
+        .era-section {
+            display: flex; align-items: center; padding: 100px 10%; min-height: 70vh; gap: 60px;
+        }
+        /* Alterna el orden: Imagen derecha / Imagen izquierda */
+        .era-section:nth-child(even) { flex-direction: row-reverse; background-color: var(--bg-light); }
+
+        .era-content { flex: 1; position: relative; }
+        .era-year { 
+            font-family: 'Lexend'; font-size: 6rem; color: var(--primary); opacity: 0.1; 
+            position: absolute; top: -50px; left: -10px; z-index: -1;
+        }
+        .era-content h2 { font-family: 'Lexend'; font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); }
+        .era-content p { font-size: 1.1rem; line-height: 1.8; color: #475569; }
+
+        .era-image { 
+            flex: 1; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .era-image img { width: 100%; height: 450px; object-fit: cover; transition: 0.5s; }
+        .era-image:hover img { transform: scale(1.05); }
+
+        /* --- FOOTER UNIFICADO (IGUAL A LAS OTRAS PÁGINAS) --- */
+        footer { background-color: #0f172a; color: #f8fafc; padding: 60px 10% 20px; margin-top: 50px; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h4 { font-family: 'Lexend'; font-size: 1.1rem; margin-bottom: 20px; color: var(--accent); text-transform: uppercase; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: #ffffff; padding-left: 5px; }
+        .footer-buttons { display: flex; flex-direction: column; gap: 15px; }
+        .btn-footer { padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+        .btn-transparencia { background: transparent; border: 1px solid #ffffff; color: white; }
+        .btn-reclamaciones { background: #ffffff; color: #0f172a; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
+
+        @media (max-width: 768px) {
+            .era-section { flex-direction: column !important; padding: 60px 5%; text-align: center; }
+            .era-year { left: 50%; transform: translateX(-50%); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">FACU<span>PSI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="historia.html" class="active">Historia</a></li>
+            <li><a href="carrera.html">Carrera</a></li>
+            <li><a href="academico.html">Académico</a></li>
+            <li><a href="docentes.html">Cuerpo Académico</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header class="history-hero">
+        <h1>Nuestra Historia</h1>
+        <p>Trayectoria y compromiso con la salud mental.</p>
+    </header>
+
+    <main>
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2013</span>
+                <h2>Fundación y Origen 
+                <p>La Facultad de Psicología de la Universidad Nacional "San Luis Gonzaga" nació como respuesta a una necesidad social imperiosa en la región Ica: la formación de profesionales especializados en brindar atención integral a la salud mental. El proceso de creación se formalizó el 15 de enero de 2013, mediante la Resolución Rectoral Nº 044-R-UNICA-2013, tras el acuerdo de la Asamblea Universitaria que consolidó este anhelo regional.</p>
+                <br>
+                <p>Desde su concepción, la facultad se trazó el objetivo de formar especialistas dedicados a la promoción, prevención y rehabilitación emocional, asegurando el bienestar tanto de individuos como de grupos humanos en estado de vulnerabilidad.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQre2NVzzBK5lZb7zomJawnsERbUPEZOXOwkA&s" alt="Fundación y origen">
+            </div>
+        </section>
+
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2014</span>
+                <h2>Primeros Gobiernos y Organización</h2>
+                <p>En su etapa fundacional, y ante la necesidad de estructurar sus bases administrativas, la facultad inició sus funciones bajo la dirección de Consejos Directivos Transitorios. La Dra. Luisa Elizabeth Vargas Reyes fue la encargada de liderar este primer periodo en 2013, sentando los cimientos de la gestión institucional.</p>
+                <br>
+                <p>Posteriormente, en 2014 y 2015, los consejos presididos por el Dr. Máximo Isaac Sevillano Díaz y la Dra. Carmen Vera Cáceres, respectivamente, asumieron la tarea de planificar el crecimiento académico y administrativo. Estos cuerpos directivos, integrados por docentes de amplia trayectoria, fueron fundamentales para garantizar la estabilidad y el desarrollo de la facultad en sus años de implementación.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://www.unica.edu.pe/psicologia/info/fotos/pub/historia01.png" alt="Primeros Gobiernos y Organización">
+            </div>
+        </section>
+
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2015</span>
+                <h2>Hitos Académicos y Sedes Iniciales</h2>
+                <p>La historia académica de la facultad comenzó con la valentía de 73 estudiantes pioneros, quienes ingresaron en los procesos de admisión del año 2013. El 2 de abril de 2014 marcó un hito histórico con el inicio de las actividades académicas en el Local Central de la calle Bolívar, donde, a pesar de las limitaciones de infraestructura iniciales, se impartieron las primeras cátedras. La evolución del campus continuó en junio de 2015, cuando la facultad se trasladó a la Ciudad Universitaria, ocupando ambientes en el Pabellón Nº 12. Este cambio permitió una mejor organización de las aulas y áreas administrativas, simbolizando el crecimiento y la expansión de nuestra comunidad educativa.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy2eaM4wCj5YsPvJ_un8Jf5Qc0e_U5HuCTBg&s" alt="Hitos Académicos y Sedes Iniciales">
+            </div>
+        </section>
+
+         <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2016</span>
+                <h2>Resiliencia ante la crisis de gobernabilidad</h2>
+                <p>Durante el año 2016, la facultad atravesó un complejo periodo de inestabilidad política externa que afectó a toda la universidad. Ante el vacío de gobernabilidad y en defensa de la autonomía universitaria y el Estado de Derecho, la comunidad de psicología mantuvo una resistencia firme y ejemplar. Con la intervención de la SUNEDU y el restablecimiento del orden democrático institucional, se ratificó la decanatura de la Dra. Luisa Vargas Reyes a finales de dicho año. Este proceso de resiliencia permitió que las labores académicas se normalizaran, adecuándose progresivamente a las exigencias de la Ley Universitaria N° 30220.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://lalupa.pe/wp-content/uploads/2022/12/lalupa.pe-entender-en-pocas-palabras-a-crisis-en-la-universidad-nacional-san-luis-gonzaga-de-ica.jpg" alt="Resiliencia ante la crisis de gobernabilidad">
+            </div>
+        </section>
+
+         <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2017</span>
+                <h2>Institucionalización y Modernización Contemporánea</h2>
+                <p>A partir de septiembre de 2017, la facultad alcanzó su plena madurez institucional al celebrar las primeras elecciones internas universales bajo el marco de la nueva Ley Universitaria. Con la elección de la Dra. Luisa Vargas Reyes como Decana y la instalación del primer Consejo de Facultad integrado por docentes y estudiantes, se consolidó un gobierno democrático y sostenible. Actualmente, la gestión se enfoca en la modernización constante, destacando la implementación de aulas tecnológicas en la Biblioteca Central y el equipamiento de vanguardia, sumando esfuerzos colectivos para alcanzar la excelencia académica y el licenciamiento institucional.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485006154_668158042394774_8711510226430589871_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=sttLsnznY_QQ7kNvwEmde4S&_nc_oc=AdkQNsssS1-Aa883upvr1QS0OxFHUCRgEKqWtONzXS3mTBxmMTdUyZnWnNdtSUYn_VCn37VMWNGzkCGSOIIHTX25&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=f4lUPbPyKlXV236OiAcWmw&oh=00_AfsFqXfA5jxQGZF7Xrzx9TErQxKQzFet2wuJ6lO8fbYseg&oe=6995C491" alt="Institucionalización t Modernización Contemporánea">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Facultad de Psicología</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">UNICA - Formando profesionales con bases científicas y sentido humano.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegación</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="carrera.html">Malla Curricular</a></li>
+                    <li><a href="contacto.html">Mapa del Sitio</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Gestión Pública</h4>
+                <div class="footer-buttons">
+                    <a href="https://www.transparencia.gob.pe/" target="_blank" class="btn-footer btn-transparencia">
+                        <i class="fa-solid fa-eye"></i> Transparencia
+                    </a>
+                    <a href="#" class="btn-footer btn-reclamaciones">
+                        <i class="fa-solid fa-book"></i> Libro de Reclamaciones
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Facultad de Psicología - UNICA. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
