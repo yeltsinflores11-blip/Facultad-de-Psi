@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital | Facultad de Psicología UNICA</title>
+    <style>
+        /* CSS - Identidad Visual de la UNICA */
+        :root {
+            --azul-unica: #003366;
+            --dorado-unica: #C5A059;
+            --fondo: #f4f7f6;
+            --blanco: #ffffff;
+            --texto: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fondo);
+            color: var(--texto);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--azul-unica);
+            color: white;
+            padding: 2rem 0;
+            border-bottom: 5px solid var(--dorado-unica);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between; /* Título izquierda, Botón derecha */
+            align-items: center;
+        }
+
+        .header-texto h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        /* Botón superior derecho solicitado */
+        .btn-menu-top {
+            background-color: var(--dorado-unica);
+            color: var(--azul-unica) !important;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .btn-menu-top:hover {
+            background-color: var(--blanco);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Panel de Búsqueda */
+        .buscador-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        #busqueda {
+            flex-grow: 1;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #busqueda:focus {
+            border-color: var(--dorado-unica);
+        }
+
+        /* Grid de Libros (PSI-Code Style) */
+        .grid-libros {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .tarjeta-psi {
+            background: white;
+            border-left: 6px solid var(--dorado-unica);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tarjeta-psi:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .area-tag {
+            font-size: 0.75rem;
+            background: var(--azul-unica);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .titulo-pdf {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: var(--azul-unica);
+            text-decoration: none;
+            line-height: 1.4;
+        }
+
+        .autor {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .btn-descarga {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--dorado-unica);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-descarga:hover {
+            background-color: #a3844a;
+        }
+
+        /* Formulario de Solicitud Profesional */
+        .seccion-contacto {
+            background: white;
+            margin-top: 5rem;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .seccion-contacto h2 {
+            color: var(--azul-unica);
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-grupo {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--azul-unica);
+        }
+
+        input[type="email"], textarea, select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-enviar {
+            background-color: var(--azul-unica);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-enviar:hover {
+            background-color: #002244;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #222;
+            color: #bbb;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 600px) {
+            .header-contenido { flex-direction: column; gap: 15px; text-align: center; }
+            .btn-menu-top { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-contenido">
+            <div class="header-texto">
+                <h1>UNICA | Psicología Digital</h1>
+            </div>
+            <a href="menu.html" class="btn-menu-top">🏠 Ir al Menú</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="buscador-panel">
+            <input type="text" id="busqueda" placeholder="Buscar en la biblioteca (Clínica, Educativa, Tesis)..." onkeyup="filtrar()">
+        </div>
+
+        <div class="grid-libros" id="listaLibros">
+            <div class="tarjeta-psi" data-area="Clínica">
+                <span class="area-tag">Psicología Clínica</span>
+                <a href="https://repositorio.unica.edu.pe/items/3b13cd15-e8b1-4d51-a35b-d2aec3931535" class="titulo-pdf" target="_blank">Ansiedad y trastornos del sueño en estudiantes de la UNICA</a>
+                <p class="autor">Investigadores UNICA (2023)</p>
+                <a href="https://repositorio.unica.edu.pe/items/3b13cd15-e8b1-4d51-a35b-d2aec3931535" class="btn-descarga" target="_blank">Leer Documento</a>
+            </div>
+
+            <div class="tarjeta-psi" data-area="Educativa">
+                <span class="area-tag">Psicología Educativa</span>
+                <a href="https://repositorio.unica.edu.pe/items/52a44d22-6e7b-4f9e-bdd1-a8d962bd121b" class="titulo-pdf" target="_blank">Estrés académico y bienestar psicológico en Ica</a>
+                <p class="autor">Facultad de Psicología (2022)</p>
+                <a href="https://repositorio.unica.edu.pe/items/52a44d22-6e7b-4f9e-bdd1-a8d962bd121b" class="btn-descarga" target="_blank">Leer Documento</a>
+            </div>
+
+            <div class="tarjeta-psi" data-area="Clínica">
+                <span class="area-tag">Clínica / Social</span>
+                <a href="https://repositorio.unica.edu.pe/items/0a1f2806-77b2-4e3e-95a0-c9159f0c41a9" class="titulo-pdf" target="_blank">Estilos de apego y dependencia emocional</a>
+                <p class="autor">Tesis de Licenciatura UNICA</p>
+                <a href="https://repositorio.unica.edu.pe/items/0a1f2806-77b2-4e3e-95a0-c9159f0c41a9" class="btn-descarga" target="_blank">Leer Documento</a>
+            </div>
+        </div>
+
+        <div class="seccion-contacto">
+            <h2>📩 Solicitar Nuevo Material</h2>
+            <form id="solicitudForm">
+                <div class="form-grupo">
+                    <label>Correo Electrónico:</label>
+                    <input type="email" placeholder="estudiante@unica.edu.pe" required>
+                </div>
+                <div class="form-grupo">
+                    <label>Área de Especialidad:</label>
+                    <select>
+                        <option>Clínica</option>
+                        <option>Educativa</option>
+                        <option>Organizacional</option>
+                        <option>Forense</option>
+                        <option>Social</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label>¿Qué libro o tesis necesitas?</label>
+                    <textarea rows="4" placeholder="Título, autor o tema específico..."></textarea>
+                </div>
+                <button type="button" class="btn-enviar" onclick="alert('Solicitud enviada correctamente')">Enviar a la Biblioteca</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Universidad Nacional San Luis Gonzaga - Facultad de Psicología</p>
+        <p>Ica, Perú</p>
+    </footer>
+
+    <script>
+        function filtrar() {
+            let input = document.getElementById('busqueda').value.toLowerCase();
+            let tarjetas = document.getElementsByClassName('tarjeta-psi');
+            for (let t of tarjetas) {
+                t.style.display = t.innerText.toLowerCase().includes(input) ? "flex" : "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
