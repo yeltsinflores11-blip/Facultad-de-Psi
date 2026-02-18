@@ -10,7 +10,7 @@
     <style>
         :root {
             --primary: #1e40af;
-            --accent: #6588fa;
+            --accent: #10b981;
             --white: #ffffff;
             --dark: #0f172a;
         }
@@ -18,7 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- NAVEGACIÓN TRANSPARENTE --- */
         nav {
             position: absolute; width: 100%; padding: 30px 5%;
             display: flex; justify-content: space-between; align-items: center;
@@ -30,11 +29,10 @@
         .nav-links a { text-decoration: none; color: var(--white); font-weight: 500; font-size: 0.9rem; opacity: 0.8; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; }
 
-        /* --- HERO SECTION (EL IMPACTO) --- */
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), 
-                        url('https://diariocorreo.pe/resizer/v2/JWIASK4ZXZADHM5GBUY4MQGP2A.jpg?auth=17fc6145de29334adc994ec232c5b964a78f837667a67ff758db42b19044098a&width=2048&height=1365&quality=75&smart=true');
+                        url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1400');
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: var(--white); text-align: center; padding: 0 10%;
@@ -43,49 +41,45 @@
         .hero h1 { font-family: 'Lexend'; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; }
         .hero p { font-size: 1.2rem; max-width: 700px; margin-bottom: 40px; opacity: 0.9; }
         
-        /* --- AJUSTE DE BOTONES EN EL HERO --- */
-.cta-buttons { 
-    display: flex; 
-    gap: 15px; 
-    flex-wrap: wrap; /* Para que en celulares se acomoden uno bajo otro */
-    justify-content: center;
-}
+        .cta-buttons { 
+            display: flex; 
+            gap: 15px; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-.btn { 
-    padding: 14px 28px; 
-    border-radius: 50px; 
-    text-decoration: none; 
-    font-weight: 600; 
-    transition: all 0.3s ease; 
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
-}
+        .btn { 
+            padding: 14px 28px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            transition: all 0.3s ease; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
 
-/* Botón Aula Virtual (Estilo especial) */
-.btn-virtual {
-    background: rgba(16, 185, 129, 0.2); /* Verde suave con transparencia */
-    color: #ffffff;
-    border: 2px solid var(--accent);
-    backdrop-filter: blur(5px);
-}
+        .btn-virtual {
+            background: rgba(16, 185, 129, 0.2);
+            color: #ffffff;
+            border: 2px solid var(--accent);
+            backdrop-filter: blur(5px);
+        }
 
-.btn-virtual:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-5px);
-}
+        .btn-virtual:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px);
+        }
 
-/* Botón Primario y Secundario ajustes rápidos */
-.btn-primary { background: var(--primary); color: white; border: 2px solid var(--primary); }
-.btn-secondary { background: white; color: var(--dark); border: 2px solid white; }
+        .btn-primary { background: var(--primary); color: white; border: 2px solid var(--primary); }
+        .btn-secondary { background: white; color: var(--dark); border: 2px solid white; }
 
-.btn:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
+        .btn:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
 
-        /* --- SECCIÓN DE ACCESOS RÁPIDOS --- */
         .shortcuts {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px; padding: 50px 10%; margin-top: -80px; position: relative; z-index: 10;
@@ -101,7 +95,6 @@
         .card-link:hover i { color: white; }
         .card-link h3 { font-family: 'Lexend'; margin-bottom: 10px; }
 
-        /* --- FRASE CORTA --- */
         .quote-section { padding: 100px 10%; text-align: center; }
         .quote-section h2 { font-family: 'Lexend'; font-size: 2rem; color: var(--primary); font-style: italic; }
 
@@ -110,247 +103,549 @@
             .shortcuts { margin-top: 20px; }
         }
 
-        /* --- SECCIÓN ESTADÍSTICAS --- */
-.stats-bar {
-    display: flex;
-    justify-content: space-around;
-    padding: 60px 10%;
-    background: var(--dark);
-    color: white;
-    text-align: center;
-}
-.stat-item h2 { font-size: 2.5rem; color: var(--accent); font-family: 'Lexend'; }
-.stat-item p { font-size: 0.9rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 10%;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+        }
+        .stat-item h2 { font-size: 2.5rem; color: var(--accent); font-family: 'Lexend'; }
+        .stat-item p { font-size: 0.9rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
 
-/* --- CARRUSEL DE INFRAESTRUCTURA --- */
-.infra-section { padding: 80px 10%; background: var(--white); text-align: center; }
-.infra-section h2 { font-family: 'Lexend'; font-size: 2.5rem; margin-bottom: 40px; color: var(--primary); }
+        .infra-section { padding: 80px 10%; background: var(--white); text-align: center; }
+        .infra-section h2 { font-family: 'Lexend'; font-size: 2.5rem; margin-bottom: 40px; color: var(--primary); }
 
-.carousel-container {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-}
+        .carousel-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
 
-.carousel-slide {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
 
-.slide-item {
-    min-width: 100%;
-    position: relative;
-}
+        .slide-item {
+            min-width: 100%;
+            position: relative;
+        }
 
-.slide-item img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    display: block;
-}
+        .slide-item img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
 
-.slide-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    color: white;
-    padding: 30px;
-    text-align: left;
-}
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 30px;
+            text-align: left;
+        }
 
-/* Botones del Carrusel */
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.3);
-    color: white;
-    padding: 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    backdrop-filter: blur(5px);
-    transition: 0.3s;
-}
-.prev:hover, .next:hover { background: var(--primary); }
-.prev { left: 20px; }
-.next { right: 20px; }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+        .prev:hover, .next:hover { background: var(--primary); }
+        .prev { left: 20px; }
+        .next { right: 20px; }
 
-/* --- SECCIÓN NOTICIAS Y EVENTOS --- */
-.news-section {
-    padding: 80px 10%;
-    background-color: var(--bg-alt);
-}
+        .news-section {
+            padding: 80px 10%;
+            background-color: var(--bg-alt);
+        }
 
-.news-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 40px;
-}
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
 
-.news-header h2 { font-family: 'Lexend'; font-size: 2.2rem; color: var(--primary); }
+        .news-header h2 { font-family: 'Lexend'; font-size: 2.2rem; color: var(--primary); }
 
-.news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
 
-.news-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: 0.3s;
-    border-bottom: 4px solid transparent;
-}
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+        }
 
-.news-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--accent);
-}
+        .news-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
 
-.news-tag {
-    background: var(--primary);
-    color: white;
-    padding: 5px 12px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-radius: 5px;
-    display: inline-block;
-    margin-bottom: 15px;
-}
+        .news-tag {
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
 
-.news-content { padding: 25px; }
+        .news-content { padding: 25px; }
 
-.news-content h3 {
-    font-family: 'Lexend';
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    line-height: 1.3;
-}
+        .news-content h3 {
+            font-family: 'Lexend';
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
 
-.news-date {
-    font-size: 0.85rem;
-    color: #94a3b8;
-    display: block;
-    margin-bottom: 15px;
-}
+        .news-date {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 15px;
+        }
 
-.btn-news {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+        .btn-news {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-.btn-news:hover { gap: 10px; transition: 0.2s; }
+        .btn-news:hover { gap: 10px; transition: 0.2s; }
 
-/* --- FOOTER MODERNO Y UNIFICADO --- */
-footer {
-    background-color: #0f172a; /* Azul muy oscuro (profesional) */
-    color: #f8fafc;
-    padding: 60px 10% 20px;
-    font-family: 'Inter', sans-serif;
-}
+        footer {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 60px 10% 20px;
+            font-family: 'Inter', sans-serif;
+        }
 
-.footer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
 
-.footer-section h4 {
-    font-family: 'Lexend';
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: #838fff; /* Color de acento verde */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .footer-section h4 {
+            font-family: 'Lexend';
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #10b981;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.footer-links {
-    list-style: none;
-}
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-links a:hover { color: #ffffff; padding-left: 5px; }
 
-.footer-links li {
-    margin-bottom: 12px;
-}
+        .footer-buttons { display: flex; flex-direction: column; gap: 15px; }
 
-.footer-links a {
-    color: #cbd5e1;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .btn-footer {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
 
-.footer-links a:hover {
-    color: #ffffff;
-    padding-left: 5px;
-}
+        .btn-transparencia { background: transparent; border: 1px solid #ffffff; color: white; }
+        .btn-transparencia:hover { background: white; color: #0f172a; }
+        .btn-reclamaciones { background: #ffffff; color: #0f172a; }
 
-/* Estilo para los botones de Transparencia y Reclamaciones */
-.footer-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
 
-.btn-footer {
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: 0.3s;
-}
+        /* ============================================
+           DR. OKARITO CHATBOT STYLES
+        ============================================ */
 
-.btn-transparencia {
-    background: transparent;
-    border: 1px solid #ffffff;
-    color: white;
-}
+        /* Botón flotante */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--primary), #3b5bdb);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.5);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-.btn-transparencia:hover {
-    background: white;
-    color: #0f172a;
-}
+        #chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(30, 64, 175, 0.6);
+        }
 
-.btn-reclamaciones {
-    background: #ffffff;
-    color: #0f172a;
-}
+        #chatbot-toggle .avatar-icon {
+            font-size: 1.8rem;
+        }
 
-.btn-reclamaciones img {
-    height: 18px; /* Para el logo del libro de reclamaciones */
-}
+        /* Indicador de notificación */
+        #chatbot-toggle::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse-dot 2s infinite;
+        }
 
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #94a3b8;
-}
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        /* Ventana del chat */
+        #chatbot-window {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 380px;
+            height: 560px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: bottom right;
+        }
+
+        #chatbot-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Header del chat */
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-avatar {
+            width: 46px;
+            height: 46px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            flex-shrink: 0;
+        }
+
+        .chat-header-info { flex: 1; }
+
+        .chat-header-info h4 {
+            color: white;
+            font-family: 'Lexend';
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .chat-status {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-status::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .chat-close {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-close:hover { background: rgba(255,255,255,0.3); }
+
+        /* Área de mensajes */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: #f8faff;
+        }
+
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-track { background: transparent; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Mensajes */
+        .message {
+            display: flex;
+            gap: 8px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user { flex-direction: row-reverse; }
+
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            flex-shrink: 0;
+            align-self: flex-end;
+        }
+
+        .message.user .message-avatar { background: var(--accent); }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .message.bot .message-bubble {
+            background: white;
+            color: var(--dark);
+            border-radius: 4px 18px 18px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--primary), #3b5bdb);
+            color: white;
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .typing-dots {
+            background: white;
+            border-radius: 4px 18px 18px 18px;
+            padding: 12px 16px;
+            display: flex;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+
+        .typing-dots span {
+            width: 7px;
+            height: 7px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        /* Sugerencias rápidas */
+        .quick-suggestions {
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            flex-shrink: 0;
+            background: #f8faff;
+            border-top: 1px solid #e8f0fe;
+        }
+
+        .quick-suggestions::-webkit-scrollbar { display: none; }
+
+        .suggestion-btn {
+            background: white;
+            border: 1.5px solid #c7d7fe;
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Input área */
+        .chat-input-area {
+            padding: 15px 18px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        #chat-input {
+            flex: 1;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 25px;
+            padding: 10px 16px;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: 0.2s;
+            color: var(--dark);
+            background: #f8faff;
+            resize: none;
+            max-height: 100px;
+        }
+
+        #chat-input:focus {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        #chat-input::placeholder { color: #94a3b8; }
+
+        #send-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #3b5bdb);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        #send-btn:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4); }
+        #send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            #chatbot-window {
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 100px;
+                height: 70vh;
+            }
+            #chatbot-toggle { right: 20px; bottom: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -362,15 +657,22 @@ footer {
             <li><a href="nosotros.html">Nosotros</a></li>
             <li><a href="historia.html" class="active">Historia</a></li>
             <li><a href="carrera.html">Carrera</a></li>
-            <li><a href="biblioteca.html">Biblioteca</a></li>
-            <li><a href="aula.html">Aula Virtual</a></li>
+            <li><a href="academico.html">Académico</a></li>
+            <li><a href="docentes.html">Cuerpo Académico</a></li>
             <li><a href="contacto.html">Contacto</a></li>
         </ul>
     </nav>
 
     <header class="hero">
-        <h1>A través de otros nos convertimos<br>en nosotros mismos.</h1>
-        <p>Formamos líderes en psicología con rigor científico y compromiso humano en la "Universidad Nacional San Luis Gonzaga".</p>
+        <h1>Entiende la Mente,<br>Transforma Vidas.</h1>
+        <p>Formamos líderes en psicología con rigor científico y compromiso humano en la Universidad Nacional San Luis Gonzaga.</p>
+        <div class="cta-buttons">
+    <a href="carrera.html" class="btn btn-primary">Ver Carrera</a>
+    <a href="https://aulavirtual.unica.edu.pe/" target="_blank" class="btn btn-virtual">
+        <i class="fa-solid fa-laptop-code"></i> Aula Virtual
+    </a>
+    <a href="contacto.html" class="btn btn-secondary">Admisión 2026</a>
+</div>
     </header>
 
     <section class="shortcuts">
@@ -387,21 +689,21 @@ footer {
         <a href="docentes.html" class="card-link">
             <i class="fa-solid fa-user-tie"></i>
             <h3>Docentes</h3>
-            <p>Aprende de los mejores especialistas del país.</p>
+            <p>Aprende de los mejores especialistas de la región.</p>
         </a>
     </section>
 
     <section class="stats-bar">
         <div class="stat-item">
-            <h2>13</h2>
+            <h2>+40</h2>
             <p>Años de Historia</p>
         </div>
         <div class="stat-item">
-            <h2>+1500</h2>
+            <h2>1500+</h2>
             <p>Egresados</p>
         </div>
         <div class="stat-item">
-            <h2>2</h2>
+            <h2>03</h2>
             <p>Laboratorios Propios</p>
         </div>
         <div class="stat-item">
@@ -411,100 +713,30 @@ footer {
     </section>
 
     <section class="infra-section">
-    <h2>NUESTRAS INFRAESTRUCTURAS</h2>
-
-    <div class="carousel-container">
-        <div class="carousel-slide" id="carouselSlide">
-
-            <div class="slide-item">
-                <img src="imagenes/imagen1.jpg" alt="Facultad">
-                <div class="slide-caption">
-                    <h3>Facultad</h3>
-                    <p>Ambientes modernos diseñados para el aprendizaje colaborativo.</p>
+        <h2>Nuestras Instalaciones</h2>
+        <div class="carousel-container">
+            <div class="carousel-slide" id="carouselSlide">
+                <div class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756cdfb3f?auto=format&fit=crop&w=1000" alt="Pabellón Principal">
+                    <div class="slide-caption">
+                        <h3>Pabellón de Aulas</h3>
+                        <p>Ambientes modernos diseñados para el aprendizaje colaborativo.</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="slide-item">
-                <img src="imagenes/imagen2.jpg" alt="Auditorio">
-                <div class="slide-caption">
-                    <h3>Instalaciones</h3>
-                    <p>Una vista más completa de nuestras instalaciones.</p>
+                <div class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000" alt="Auditorio">
+                    <div class="slide-caption">
+                        <h3>Auditorio Institucional</h3>
+                        <p>Sede de congresos nacionales e internacionales de psicología.</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="slide-item">
-    <img src="imagenes/imagen3.jpg" alt="Biblioteca">
-    <div class="slide-caption">
-        <h3>Nuestras Aulas</h3>
-        <p>Aulas adaptadas para el aprendizaje activo.</p>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen4.jpg" alt="Pasillos">
-    <div class="slide-caption">
-        <h3>Pasillos</h3>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen5.jpg" alt="Módulo de Venta">
-    <div class="slide-caption">
-        <h3>Módulo de Venta</h3>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen6.jpg" alt="Infraestructura">
-    <div class="slide-caption">
-        <h3>Infraestructura</h3>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen7.jpg" alt="Auditorio">
-    <div class="slide-caption">
-        <h3>Auditorio</h3>
-        <p>Orientamos y apoyamos en su crecimiento como profesionales.</p>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen8.jpg" alt="Elevador">
-    <div class="slide-caption">
-        <h3>Elevador</h3>
-        <p>Rápido traslado.</p>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen9.jpg" alt="Aulas">
-    <div class="slide-caption">
-        <h3>Nuestras Aulas</h3>
-    </div>
-</div>
-
-<div class="slide-item">
-    <img src="imagenes/imagen10.jpg" alt="Segundo Auditorio">
-    <div class="slide-caption">
-        <h3>Nuestro segundo Auditorio</h3>
-    </div>
-</div>
-
-    
+                <div class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000" alt="Biblioteca">
+                    <div class="slide-caption">
+                        <h3>Biblioteca Especializada</h3>
+                        <p>Miles de títulos físicos y digitales para investigación científica.</p>
+                    </div>
                 </div>
-                </div>
-                </div>
-                </div>
-                    
-                </div>
-                </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
             </div>
             <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
             <button class="next" onclick="moveSlide(1)">&#10095;</button>
@@ -521,37 +753,37 @@ footer {
                 <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Actualidad</span>
                 <h2>Eventos y Noticias</h2>
             </div>
-            <a href="https://www.unica.edu.pe/noticias/2026/02/" style="color: var(--primary); font-weight: 600;">Ver todo <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#" style="color: var(--primary); font-weight: 600;">Ver todo <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="news-grid">
             <article class="news-card">
                 <div class="news-content">
                     <span class="news-tag">Evento</span>
-                    <span class="news-date">06 Febrero, 2026</span>
-                    <h3>IMÁGENES DE LA PRESENTCIÓN DE LAS CANDIDATAS AL REINADO</h3>
-                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">#65AniversarioUNSLG | UNSLG presenta al grupo final de candidatas al Reinado por su 65.° aniversario institucional.</p>
-                    <a href="https://www.unica.edu.pe/noticias/2026/02/06/imagenes-de-la-presentcion-de-las-candidatas-al-reinado/" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
+                    <span class="news-date">15 de Enero, 2026</span>
+                    <h3>Seminario Internacional: Avances en Neuropsicología</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Contaremos con ponentes de España y México para discutir el futuro del mapeo cerebral.</p>
+                    <a href="#" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
             </article>
 
             <article class="news-card">
                 <div class="news-content">
                     <span class="news-tag" style="background: var(--accent);">Admisión</span>
-                    <span class="news-date">09 Febrero, 2026</span>
-                    <h3>ADMISIÓN POSGRADO 2026–I | UNICA</h3>
-                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Da el siguiente paso en tu formación profesional.</p>
-                    <a href="https://www.unica.edu.pe/noticias/2026/02/09/admision-posgrado-2026-i-unica/" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
+                    <span class="news-date">20 de Enero, 2026</span>
+                    <h3>Charlas de Orientación Vocacional: Psicología en la UNICA</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Conoce nuestras instalaciones y resuelve tus dudas sobre el examen de admisión.</p>
+                    <a href="#" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
             </article>
 
             <article class="news-card">
                 <div class="news-content">
                     <span class="news-tag" style="background: #f59e0b;">Noticia</span>
-                    <span class="news-date">21 de Enero, 2026</span>
-                    <h3>CAMPEONATO DEPORTIVO DE LA FACULTAD DE PSICOLOGÍA</h3>
-                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Los buenos momentos que quedan en las fotos nunca tienen fecha de expiración.</p>
-                    <a href="https://www.unica.edu.pe/noticias/2026/01/21/campeonato-deportivo-de-la-facultad-de-psicologia/" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
+                    <span class="news-date">02 de Enero, 2026</span>
+                    <h3>Nueva acreditación de calidad para el laboratorio clínico</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">Nuestro laboratorio ha sido certificado por cumplir con estándares internacionales de investigación.</p>
+                    <a href="#" class="btn-news">Leer más <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
             </article>
         </div>
@@ -567,18 +799,18 @@ footer {
         <div class="footer-section">
             <h4>Navegación</h4>
             <ul class="footer-links">
-                <li><a href="https://www.unica.edu.pe/universidad/universidad.php">UNICA</a></li>
-                <li><a href="https://campus.unica.edu.pe/">CAMPUS VIRTUAL</a></li>
-                <li><a href="https://www.unica.edu.pe/psicologia/">FACULTAD DE PSICOLOGIA</a></li>
-                <li><a href="https://admision.unica.edu.pe/">ADMISION</a></li>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="carrera.html">Malla Curricular</a></li>
+                <li><a href="docentes.html">Cuerpo Docente</a></li>
+                <li><a href="contacto.html">Mapa del Sitio</a></li>
             </ul>
         </div>
 
         <div class="footer-section">
             <h4>Gestión Pública</h4>
             <div class="footer-buttons">
-                <a href="https://sisadmision.unica.edu.pe/inscripcion" target="_blank" class="btn-footer btn-transparencia">
-                    <i class="fa-solid fa-eye"></i> INSCRIBETE AQUI
+                <a href="https://www.transparencia.gob.pe/" target="_blank" class="btn-footer btn-transparencia">
+                    <i class="fa-solid fa-eye"></i> Portal de Transparencia
                 </a>
                 <a href="https://reclamos.servicios.gob.pe/?institution_id=267" class="btn-footer btn-reclamaciones">
                     <i class="fa-solid fa-book"></i> Libro de Reclamaciones
@@ -589,8 +821,9 @@ footer {
         <div class="footer-section">
             <h4>Síguenos</h4>
             <div style="display: flex; gap: 15px;">
-                <a href="https://www.facebook.com/p/Facultad-de-Psicologia-UNICA-100092619940782/" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-facebook"></i></a>
-                
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-youtube"></i></a>
             </div>
         </div>
     </div>
@@ -598,28 +831,249 @@ footer {
     <div class="footer-bottom">
         <p>&copy; 2026 Facultad de Psicología - UNICA. Todos los derechos reservados.</p>
     </div>
-</footer>>
+</footer>
 
-    
+
+    <!-- ============================================
+         DR. OKARITO CHATBOT
+    ============================================ -->
+
+    <!-- Botón flotante -->
+    <button id="chatbot-toggle" title="Habla con Dr. Okarito">
+        <span class="avatar-icon">🧠</span>
+    </button>
+
+    <!-- Ventana del chat -->
+    <div id="chatbot-window">
+        <div class="chat-header">
+            <div class="chat-avatar">🧠</div>
+            <div class="chat-header-info">
+                <h4>Dr. Okarito</h4>
+                <span class="chat-status">Asistente de Psicología · UNICA</span>
+            </div>
+            <button class="chat-close" id="chat-close-btn" title="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <!-- Mensaje de bienvenida inicial -->
+            <div class="message bot">
+                <div class="message-avatar">🧠</div>
+                <div class="message-bubble">
+                    ¡Hola! Soy el <strong>Dr. Okarito</strong>, tu asistente de la Facultad de Psicología de la UNICA. 👋<br><br>
+                    Puedo orientarte sobre la carrera, temas de psicología, o lo que necesites saber sobre nuestra facultad. ¿En qué te ayudo hoy?
+                </div>
+            </div>
+        </div>
+
+        <!-- Sugerencias rápidas -->
+        <div class="quick-suggestions" id="quick-suggestions">
+            <button class="suggestion-btn" onclick="sendSuggestion('¿Qué estudia la psicología?')">¿Qué es psicología?</button>
+            <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo es la carrera en UNICA?')">La carrera</button>
+            <button class="suggestion-btn" onclick="sendSuggestion('¿Qué ramas tiene la psicología?')">Ramas</button>
+            <button class="suggestion-btn" onclick="sendSuggestion('¿Cómo postular a la Facultad?')">Admisión</button>
+        </div>
+
+        <div class="chat-input-area">
+            <textarea id="chat-input" placeholder="Escribe tu pregunta..." rows="1"></textarea>
+            <button id="send-btn" title="Enviar">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
 
     <script>
+        /* ---- CARRUSEL ---- */
         let currentIndex = 0;
 
-    function moveSlide(direction) {
-        const slide = document.getElementById('carouselSlide');
-        const totalSlides = document.querySelectorAll('.slide-item').length;
-        
-        currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
-        const offset = -currentIndex * 100;
-        slide.style.transform = `translateX(${offset}%)`;
-    }
+        function moveSlide(direction) {
+            const slide = document.getElementById('carouselSlide');
+            const totalSlides = document.querySelectorAll('.slide-item').length;
+            currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+            slide.style.transform = `translateX(${-currentIndex * 100}%)`;
+        }
 
-    // Opcional: Carrusel automático cada 5 segundos
-    setInterval(() => {
-        moveSlide(1);
-    }, 5000);
-        </script>
-        
+        setInterval(() => moveSlide(1), 5000);
+
+
+        /* ---- DR. OKARITO CHATBOT ---- */
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const chatWindow = document.getElementById('chatbot-window');
+        const closeBtn = document.getElementById('chat-close-btn');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const messagesContainer = document.getElementById('chat-messages');
+
+        // Historial de conversación para contexto
+        let conversationHistory = [];
+        let isOpen = false;
+
+        // Abrir / cerrar chat
+        toggleBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            chatWindow.classList.toggle('open', isOpen);
+            if (isOpen) {
+                // Quitar el punto de notificación al abrir
+                toggleBtn.style.setProperty('--dot-display', 'none');
+                toggleBtn.style.cssText += '; --dot: none;';
+                chatInput.focus();
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            isOpen = false;
+            chatWindow.classList.remove('open');
+        });
+
+        // Auto-resize del textarea
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
+        });
+
+        // Enviar con Enter (Shift+Enter para nueva línea)
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        function sendSuggestion(text) {
+            chatInput.value = text;
+            sendMessage();
+            // Ocultar sugerencias después de usarlas
+            document.getElementById('quick-suggestions').style.display = 'none';
+        }
+
+        function appendMessage(role, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${role}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = role === 'bot' ? '🧠' : '👤';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typing-indicator';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '🧠';
+
+            const dots = document.createElement('div');
+            dots.className = 'typing-dots';
+            dots.innerHTML = '<span></span><span></span><span></span>';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'typing-indicator';
+            wrapper.appendChild(dots);
+
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(wrapper);
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text || sendBtn.disabled) return;
+
+            // Mostrar mensaje del usuario
+            appendMessage('user', text);
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+
+            // Agregar al historial
+            conversationHistory.push({ role: 'user', content: text });
+
+            // Deshabilitar input mientras espera
+            sendBtn.disabled = true;
+            chatInput.disabled = true;
+
+            showTyping();
+
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1000,
+                        system: `Eres el Dr. Okarito, el asistente virtual oficial de la Facultad de Psicología de la Universidad Nacional San Luis Gonzaga de Ica (UNICA), Perú.
+
+Tu personalidad:
+- Eres cálido, empático y accesible, pero también riguroso y profesional.
+- Hablas en español con un tono amigable y cercano, como un profesor que le habla a sus alumnos.
+- Usas ocasionalmente un emoji relevante para hacer la conversación más amena (no en exceso).
+- Muestras pasión genuina por la psicología y por la formación de nuevos profesionales.
+- Eres paciente y explicas los conceptos de forma clara y comprensible.
+
+Tu conocimiento y rol:
+- Respondes preguntas sobre psicología: sus ramas (clínica, educativa, organizacional, forense, neuropsicología, etc.), conceptos, teorías, figuras importantes (Freud, Piaget, Vygotsky, Maslow, Bandura, etc.).
+- Orientas a estudiantes y postulantes sobre la carrera de Psicología en la UNICA: el plan de estudios de 10 semestres, los laboratorios, el campo laboral, los requisitos de admisión.
+- Puedes dar información general de bienestar mental, técnicas de relajación, y orientación vocacional.
+- Si alguien muestra señales de crisis emocional, respondes con empatía y recomiendas buscar apoyo profesional presencial.
+- Si te preguntan algo fuera del ámbito de la psicología o de la facultad, redirige amablemente la conversación.
+
+Información de la Facultad:
+- Universidad: Universidad Nacional San Luis Gonzaga (UNICA), Ica, Perú.
+- Más de 40 años de historia formando psicólogos.
+- Más de 1,500 egresados.
+- Cuenta con 3 laboratorios propios especializados.
+- Calidad académica A+.
+- Portal del aula virtual: aulavirtual.unica.edu.pe
+
+Mantén respuestas concisas (3-5 oraciones máximo) a menos que la pregunta requiera más detalle. Siempre ofrece profundizar si el usuario lo desea.`,
+                        messages: conversationHistory
+                    })
+                });
+
+                const data = await response.json();
+                removeTyping();
+
+                if (data.content && data.content[0]) {
+                    const botReply = data.content[0].text;
+                    conversationHistory.push({ role: 'assistant', content: botReply });
+                    appendMessage('bot', botReply);
+                } else {
+                    appendMessage('bot', 'Lo siento, hubo un inconveniente al procesar tu consulta. Por favor intenta de nuevo. 🙏');
+                }
+
+            } catch (error) {
+                removeTyping();
+                appendMessage('bot', 'Parece que hay un problema de conexión en este momento. Por favor verifica tu conexión e intenta nuevamente. 🔌');
+                console.error('Chatbot error:', error);
+            } finally {
+                sendBtn.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+    </script>
 
 </body>
 </html>
