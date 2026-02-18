@@ -3,443 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard UNICA - Psicología</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>UNICA - Facultad de Psicología</title>
     <style>
         :root {
-            --bg-dark: #1e293b;        /* Fondo principal oscuro */
-            --sidebar-bg: #0f172a;    /* Fondo lateral más oscuro */
+            --bg-dark: #1a1d29; /* Fondo oscuro de tu imagen */
             --card-white: #ffffff;
-            --unica-red: #D32F2F;      /* Rojo para nombres y acentos */
-            --unica-orange: #f59e0b;   /* Naranja para barras laterales */
-            --unica-blue: #3b82f6;     /* Azul complementario */
-            --text-gray: #64748b;
+            --unica-orange: #ff8c00;
+            --unica-red: #d94132;
+            --unica-blue: #4299e1;
         }
 
         body {
-            background-color: var(--bg-dark);
-            font-family: 'Inter', 'Segoe UI', sans-serif;
             margin: 0;
-            display: flex;
-            height: 100vh;
-            overflow: hidden; /* Evita doble scroll */
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
             color: white;
+            overflow-x: hidden;
         }
 
-        /* --- BARRA LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: 85px;
-            background: var(--sidebar-bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px 0;
-            gap: 25px;
-            border-right: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .sidebar a {
-            text-decoration: none;
-            color: var(--text-gray);
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-        }
-
-        .sidebar a:hover, .sidebar a.active {
-            color: var(--unica-orange);
-            transform: translateX(3px);
-        }
-
-        .sidebar a.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--unica-orange);
-            border-radius: 0 4px 4px 0;
-        }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-
+        /* --- HEADER --- */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
+            padding: 20px 50px;
         }
 
-        .logo-section {
+        .logo-unica {
             display: flex;
             align-items: center;
-            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .logo-section i { color: var(--unica-orange); font-size: 2.2rem; }
-        .logo-section h1 { margin: 0; font-size: 1.8rem; color: var(--unica-red); font-weight: 800; letter-spacing: -1px; }
-        .logo-section span { color: #cbd5e1; font-weight: 300; font-size: 1.5rem; }
+        .logo-unica span { color: var(--unica-orange); margin-right: 8px; }
 
-        /* --- DROPDOWN DE USUARIO --- */
-        .user-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .user-info {
+        .user-section {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 18px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 20px;
+        }
+
+        /* Botón Cerrar Sesión Estilo Imagen */
+        .btn-logout {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--unica-orange);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             transition: 0.3s;
         }
 
-        .user-info:hover {
-            background: rgba(255,255,255,0.1);
-        }
+        .btn-logout:hover { background-color: rgba(255, 140, 0, 0.1); }
 
-        .user-text {
+        .user-pill {
+            background-color: #24283b;
+            padding: 5px 15px;
+            border-radius: 30px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
+            gap: 10px;
         }
 
-        #user-name { color: var(--unica-red); font-weight: 700; font-size: 0.85rem; }
-        .user-role { color: var(--text-gray); font-size: 0.7rem; }
+        .u-name { color: var(--unica-red); font-weight: bold; font-size: 12px; text-transform: uppercase; }
+        .u-role { color: #8a8d9b; font-size: 10px; display: block; }
 
-        .user-avatar {
+        .profile-img {
             width: 35px;
             height: 35px;
-            background: var(--unica-red);
-            color: white;
+            background-color: var(--unica-red);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Menú Desplegable */
-        .dropdown-menu {
-            position: absolute;
-            top: 110%;
-            right: 0;
-            background: white;
-            min-width: 180px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            list-style: none;
-            padding: 8px 0;
-            margin: 0;
-            display: none; /* Oculto por defecto */
-            z-index: 1000;
-            border: 1px solid #e2e8f0;
-        }
+        /* --- PANEL DE CURSOS --- */
+        .container { padding: 0 50px 50px 50px; }
+        
+        .panel-title { font-size: 22px; margin-bottom: 30px; }
+        .panel-title span { color: var(--unica-orange); }
 
-        .user-dropdown:hover .dropdown-menu {
-            display: block;
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        .dropdown-menu li a {
-            padding: 12px 20px;
-            text-decoration: none;
-            color: #334155;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.2s;
-        }
-
-        .dropdown-menu li a:hover {
-            background-color: #f1f5f9;
-            color: var(--unica-red);
-        }
-
-        .dropdown-menu hr {
-            margin: 5px 0;
-            border: 0;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        /* --- GRID DE CURSOS --- */
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
         }
 
-        .course-card {
-            background: var(--card-white);
-            border-radius: 16px;
+        /* --- TARJETAS --- */
+        .card {
+            background-color: var(--card-white);
+            border-radius: 20px;
             display: flex;
             height: 180px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.05);
+            color: #333;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .card-stripe {
-            width: 55px;
-            display: flex;
-            justify-content: center;
-            padding-top: 25px;
-            color: white;
-            font-size: 1.3rem;
-        }
-        .bg-orange { background: var(--unica-orange); }
-        .bg-blue { background: var(--unica-blue); }
+        .accent { width: 12px; }
+        .orange-bg { background-color: #f6ad55; }
+        .blue-bg { background-color: #4299e1; }
 
         .card-content {
             flex: 1;
-            padding: 22px;
+            padding: 20px;
+            position: relative;
             display: flex;
             flex-direction: column;
-            color: #1e293b;
         }
 
-        .card-tag {
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--unica-blue);
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
+        .category { font-size: 10px; font-weight: bold; color: var(--unica-blue); letter-spacing: 1px; }
+        .cycle { position: absolute; right: 20px; top: 20px; font-size: 10px; color: var(--unica-blue); font-weight: bold; }
+        
+        .title { font-size: 20px; font-weight: bold; color: var(--unica-red); margin: 8px 0; }
+        .desc { font-size: 12px; color: #666; line-height: 1.4; max-width: 80%; }
 
-        .card-content h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: var(--unica-red);
-            line-height: 1.2;
-            height: 50px;
-        }
+        .instructor { margin-top: auto; width: 45px; height: 45px; border-radius: 50%; background: #eee; }
 
-        .card-content p {
-            margin: 8px 0;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        .card-footer {
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .student-avatar { width: 70px; margin-bottom: -10px; }
-
-        .btn-enter {
-            background: var(--bg-dark);
+        .btn-ingresar {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            background-color: #1a1d29;
             color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-enter:hover {
-            background: var(--unica-red);
-            transform: scale(1.05);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: 60px; flex-direction: row; justify-content: space-around; padding: 0; position: fixed; bottom: 0; z-index: 100; }
-            .main-content { padding: 20px; padding-bottom: 80px; }
-            .courses-grid { grid-template-columns: 1fr; }
-            .dropdown-menu { bottom: 110%; top: auto; right: 10px; }
+            border: none;
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <nav class="sidebar">
-        <a href="index.html" title="Inicio" class="active"><i class="fas fa-th-large"></i></a>
-        <a href="tramites.html" title="Tramites"><i class="fas fa-graduation-cap"></i></a>
-        <a href="biblioteca.html" title="Biblioteca Virtual"><i class="fas fa-book"></i></a>
-        <a href="perfil.html" title="Mi Perfil"><i class="fas fa-user-circle"></i></a>
-        <a href="index.html" title="Cerrar Sesión" style="margin-top: auto; margin-bottom: 20px;"><i class="fas fa-sign-out-alt"></i></a>
-    </nav>
 
-    <div class="main-content">
-        <header>
-            <div class="logo-section">
-                <i class="fas fa-university"></i>
-                <h1>UNICA <span>Psicología</span></h1>
-            </div>
-
-            <div class="user-dropdown">
-                <div class="user-info">
-                    <div class="user-text">
-                        <span id="user-name">ESTUDIANTE UNICA</span>
-                        <span class="user-role">Psicología</span>
-                    </div>
-                    <div class="user-avatar">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
+    <header>
+        <div class="logo-unica"><span>🏛</span> UNICA <small style="margin-left:10px; font-weight:normal; color:#8a8d9b;">Psicología</small></div>
+        
+        <div class="user-section">
+            <button class="btn-logout" onclick="window.location.href='index.html'">Cerrar Sesión <span>↔</span></button>
+            
+            <div class="user-pill">
+                <div style="text-align: right;">
+                    <span id="userName" class="u-name">CARGANDO...</span>
+                    <span class="u-role">Psicología - Ciclo I</span>
                 </div>
-                <ul class="dropdown-menu">
-                    <li><a href="perfil.html"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
-                    <li><a href="ajustes.html"><i class="fas fa-id-card"></i> Expediente</a></li>
-                    <hr>
-                    <li><a href="index.html" style="color: #D32F2F;"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
-                </ul>
+                <div class="profile-img">👤</div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <h2 style="margin-bottom: 30px; font-weight: 300;">Panel de <span style="font-weight: 700; color: var(--unica-orange);">Cursos</span></h2>
+    <div class="container">
+        <h2 class="panel-title">Panel de <span>Cursos</span></h2>
 
         <div class="courses-grid">
-            
-            <div class="course-card">
-                <div class="card-stripe bg-orange"><i class="fas fa-users"></i></div>
+            <div class="card">
+                <div class="accent orange-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Social</span> <span>I Ciclo</span></div>
-                    <h3>Estrategia del aprendizaje</h3>
-                    <p>Procesos cognitivos y metacognitivos del aprendizaje.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-desarrollo.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">PSICOLOGÍA</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Estrategia del aprendizaje</h3>
+                    <p class="desc">Procesos cognitivos y metacognitivos para el éxito académico.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='estrategia.html'">INGRESAR</button>
                 </div>
             </div>
 
-            <div class="course-card">
-                <div class="card-stripe bg-blue"><i class="fas fa-brain"></i></div>
+            <div class="card">
+                <div class="accent blue-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Ciencias</span> <span>I Ciclo</span></div>
-                    <h3>Matemática</h3>
-                    <p>Análisis estructural y funcional.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-neuro.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">CIENCIAS</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Matemática</h3>
+                    <p class="desc">Fundamentos lógicos y matemáticos aplicados a la psicología.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='matematica.html'">INGRESAR</button>
                 </div>
             </div>
 
-            <div class="course-card">
-                <div class="card-stripe bg-orange"><i class="fas fa-users"></i></div>
+            <div class="card">
+                <div class="accent orange-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Social</span> <span>I Ciclo</span></div>
-                    <h3>Defenza y realidad nacional</h3>
-                    <p>Estudio contextual y estratégico del orden nacional.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-social.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">SOCIAL</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Defensa y realidad nacional</h3>
+                    <p class="desc">Análisis del contexto nacional y seguridad institucional.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='defensa.html'">INGRESAR</button>
                 </div>
             </div>
 
-            <div class="course-card">
-                <div class="card-stripe bg-blue"><i class="fas fa-balance-users"></i></div>
+            <div class="card">
+                <div class="accent orange-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Sociocultura</span> <span>I Ciclo</span></div>
-                    <h3>Deporte y cultura</h3>
-                    <p>Interacciones físicas y culturales en la sociedad.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-etica.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">ÉTICA</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Deporte y cultura</h3>
+                    <p class="desc">Desarrollo físico y expresiones culturales del estudiante.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='deporte.html'">INGRESAR</button>
                 </div>
             </div>
 
-            <div class="course-card">
-                <div class="card-stripe bg-orange"><i class="fas fa-search"></i></div>
+            <div class="card">
+                <div class="accent orange-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Comunicación</span> <span>I Ciclo</span></div>
-                    <h3>Lenguaje</h3>
-                    <p>Estructura comunicativa y simbólica del lenguaje humano.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-investigacion.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">INVESTIGACIÓN</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Lenguaje</h3>
+                    <p class="desc">Habilidades comunicativas y redacción académica.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='lenguaje.html'">INGRESAR</button>
                 </div>
             </div>
 
-             <div class="course-card">
-                <div class="card-stripe bg-blue"><i class="fas fa-balance-users"></i></div>
+            <div class="card">
+                <div class="accent blue-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Social</span> <span>I Ciclo</span></div>
-                    <h3>Psicología general</h3>
-                    <p>Fundamentos teóricos y empíricos.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-general.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">PSICOLOGÍA</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Psicología general</h3>
+                    <p class="desc">Introducción a los procesos psicológicos básicos y conducta.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='psicologia.html'">INGRESAR</button>
                 </div>
             </div>
 
-            <div class="course-card">
-                <div class="card-stripe bg-orange"><i class="fas fa-brain"></i></div>
+            <div class="card">
+                <div class="accent orange-bg"></div>
                 <div class="card-content">
-                    <div class="card-tag"><span>Ciencias</span> <span>I Ciclo</span></div>
-                    <h3>Quimica general</h3>
-                    <p>Propiedades y transformaciones de los químicos.</p>
-                    <div class="card-footer">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" class="student-avatar" alt="estudiante">
-                        <a href="curso-quimica.html" class="btn-enter">INGRESAR</a>
-                    </div>
+                    <span class="category">CIENCIAS</span> <span class="cycle">I CICLO</span>
+                    <h3 class="title">Química general</h3>
+                    <p class="desc">Bases químicas de los procesos biológicos y neurológicos.</p>
+                    <div class="instructor"></div>
+                    <button class="btn-ingresar" onclick="window.location.href='quimica.html'">INGRESAR</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Cargar nombre de usuario desde localStorage
-            const name = localStorage.getItem('userName') || 'ESTUDIANTE UNICA';
-            document.getElementById('user-name').innerText = name.toUpperCase();
-
-            // Animación de entrada para las tarjetas
-            const cards = document.querySelectorAll('.course-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-
-            // Lógica para el botón Salir (opcional: limpiar localStorage)
-            const logoutBtn = document.querySelector('.dropdown-menu li:last-child a');
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('userName');
-            });
-        });
+        window.onload = function() {
+    const nombre = localStorage.getItem('usuarioNombre');
+    const rol = localStorage.getItem('usuarioRol');
+    
+    if (nombre) {
+        document.getElementById('userName').innerText = nombre;
+        // Si quieres que el rol diga "Docente" o "Psicología - Ciclo I" dinámicamente:
+        if(rol !== "Alumno") {
+            document.querySelector('.u-role').innerText = rol;
+        }
+    } else {
+        window.location.href = "index.html";
+    }
+};
     </script>
 </body>
 </html>
