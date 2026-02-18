@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UNICA - Facultad de Psicología | Login</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1a1d29;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .login-box {
+            background-color: #24283b;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 350px;
+            border-top: 5px solid #ff8c00;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+        .sub-title { color: #ff8c00; font-size: 0.9rem; margin-bottom: 30px; display: block; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1a1d29;
+            border: 1px solid #3d445e;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2c5282;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Animación de Carga */
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff8c00;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .error-msg { color: #ff4d4d; font-size: 0.8rem; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <div class="header-title">UNIVERSIDAD NACIONAL<br>"SAN LUIS GONZAGA"</div>
+    <span class="sub-title">FACULTAD DE PSICOLOGÍA</span>
+    
+    <input type="text" id="userCode" placeholder="Código Universitario (Ej: 202401)">
+    <input type="password" id="pass" placeholder="Contraseña">
+    
+    <button id="btnIngresar" onclick="validarAcceso()">INICIAR SESIÓN</button>
+    
+    <div id="loader" class="loader"></div>
+    <div id="error" class="error-msg">Código no reconocido. Reintente.</div>
+</div>
+
+<script>
+    // Base de datos completa de la Facultad de Psicología - UNICA
+    const usuarios = [
+        { code: "202401", name: "Chavez, Kaysin", role: "Alumno" },
+        { code: "202402", name: "Aguirre, Tatiana", role: "Alumno" },
+        { code: "202403", name: "Benitez, Jorge", role: "Alumno" },
+        { code: "202404", name: "Castillo, Pedro", role: "Alumno" },
+        { code: "202405", name: "Diaz, Ana", role: "Alumno" },
+        { code: "202406", name: "Espinoza, Luis", role: "Alumno" },
+        { code: "202407", name: "Fernandez, Sofia", role: "Alumno" },
+        { code: "202408", name: "Garcia, Miguel", role: "Alumno" },
+        { code: "202409", name: "Hernandez, Jose", role: "Alumno" },
+        { code: "202410", name: "Iglesias, Carmen", role: "Alumno" },
+        { code: "202411", name: "Jimenez, Raul", role: "Alumno" },
+        { code: "202412", name: "Lopez, Elena", role: "Alumno" },
+        { code: "202413", name: "Martinez, Carlos", role: "Alumno" },
+        { code: "202414", name: "Nuñez, Patricia", role: "Alumno" },
+        { code: "202415", name: "Ortega, David", role: "Alumno" },
+        { code: "202416", name: "Perez, Juan", role: "Alumno" },
+        { code: "202417", name: "Quispe, Rosa", role: "Alumno" },
+        { code: "202418", name: "Ramirez, Fernando", role: "Alumno" },
+        { code: "202419", name: "Sanchez, Lucía", role: "Alumno" },
+        { code: "202420", name: "Torres, Manuel", role: "Alumno" },
+        { code: "profesor", name: "DR. RICARDO PALOMINO", role: "Psicología" }
+    ];
+
+    function validarAcceso() {
+        const inputCode = document.getElementById('userCode').value;
+        const errorDiv = document.getElementById('error');
+        const loader = document.getElementById('loader');
+        const btn = document.getElementById('btnIngresar');
+
+        // Busca el usuario en el arreglo de arriba
+        const usuarioEncontrado = usuarios.find(u => u.code === inputCode);
+
+        if (usuarioEncontrado) {
+            // Si lo encuentra, oculta el botón y muestra la carga
+            errorDiv.style.display = 'none';
+            btn.style.display = 'none';
+            loader.style.display = 'block';
+
+            // Guarda los datos en la memoria del navegador
+            localStorage.setItem('usuarioNombre', usuarioEncontrado.name);
+            localStorage.setItem('usuarioCodigo', usuarioEncontrado.code);
+            localStorage.setItem('usuarioRol', usuarioEncontrado.role);
+
+            // Redirige al Dashboard después de 1.5 segundos
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1500);
+            
+        } else {
+            // Si el código no existe en la lista
+            errorDiv.style.display = 'block';
+            errorDiv.innerText = "Código no reconocido por la Facultad.";
+        }
+    }
+</script>
+
+</body>
+</html>
