@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - UNICA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --bg: #F1F5F9;
+            --text: #1E293B;
+            --white: #FFFFFF;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); }
+
+        header { background: white; padding: 15px 30px; border-bottom: 1px solid #E2E8F0; }
+        .back-btn { text-decoration: none; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+
+        .profile-card { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; }
+        .profile-header { background: linear-gradient(135deg, var(--primary), #1e40af); height: 140px; }
+
+        .profile-info { padding: 0 30px 40px; position: relative; }
+
+        /* Estilo del Avatar con Foto */
+        .avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: -65px auto 20px;
+        }
+
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            background: #E2E8F0;
+            border-radius: 50%;
+            border: 5px solid white;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-circle i { font-size: 3.5rem; color: #94A3B8; }
+
+        /* Botón para cambiar foto */
+        .change-photo-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid white;
+            transition: 0.2s;
+        }
+        .change-photo-btn:hover { transform: scale(1.1); }
+
+        .user-name { font-size: 1.6rem; margin: 0; font-weight: 800; }
+        .user-role { color: #64748B; text-transform: uppercase; font-size: 0.85rem; font-weight: 600; }
+
+        .profile-details { margin-top: 30px; display: grid; gap: 15px; text-align: left; }
+        .detail-box { background: #F8FAFC; padding: 12px 20px; border-radius: 12px; border: 1px solid #E2E8F0; }
+        .label { font-size: 0.7rem; color: #94A3B8; font-weight: 700; display: block; }
+        .value { font-weight: 600; font-size: 1rem; }
+
+        .edit-input { width: 100%; padding: 8px; border: 2px solid var(--primary); border-radius: 8px; font-family: inherit; font-size: 1rem; margin-top: 5px; }
+
+        .actions { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 12px 25px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: #10B981; color: white; }
+        .btn-secondary { background: #64748B; color: white; }
+
+        #file-input { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i>Aula virtual</a>
+    </header>
+
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-header"></div>
+            
+            <div class="profile-info">
+                <div class="avatar-wrapper">
+                    <div class="avatar-circle" id="avatar-display">
+                        <i class="fas fa-user" id="default-icon"></i>
+                    </div>
+                    <label for="file-input" class="change-photo-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="file-input" accept="image/*" onchange="previewImage(this)">
+                </div>
+
+                <div id="view-mode">
+                    <h1 class="user-name" id="name-val">Cargando...</h1>
+                    <span class="user-role" id="role-val">Psicología</span>
+                    
+                    <div class="profile-details">
+                        <div class="detail-box">
+                            <span class="label">CORREO INSTITUCIONAL</span>
+                            <span class="value" id="email-val">---</span>
+                        </div>
+                        <div class="detail-box">
+                            <span class="label">ESTADO ACADÉMICO</span>
+                            <span class="value" style="color:#10B981;">● Regular</span>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="toggleEdit(true)">
+                            <i class="fas fa-edit"></i> Editar Datos
+                        </button>
+                    </div>
+                </div>
+
+                <div id="edit-mode" style="display:none;">
+                    <div class="profile-details">
+                        <div class="detail-box">
+                            <span class="label">NOMBRE COMPLETO</span>
+                            <input type="text" id="input-name" class="edit-input">
+                        </div>
+                        <div class="detail-box">
+                            <span class="label">CORREO ELECTRÓNICO</span>
+                            <input type="email" id="input-email" class="edit-input">
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-success" onclick="saveProfile()">
+                            <i class="fas fa-check"></i> Guardar
+                        </button>
+                        <button class="btn btn-secondary" onclick="toggleEdit(false)">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CARGAR DATOS AL INICIAR ---
+        document.addEventListener("DOMContentLoaded", () => {
+            loadData();
+        });
+
+        function loadData() {
+            const name = localStorage.getItem('userName') || "Estudiante UNICA";
+            const email = localStorage.getItem('userEmail') || "estudiante@unica.edu.pe";
+            const role = localStorage.getItem('userRole') || "student";
+            const photo = localStorage.getItem('userPhoto');
+
+            document.getElementById('name-val').textContent = name;
+            document.getElementById('email-val').textContent = email;
+            document.getElementById('role-val').textContent = role === 'teacher' ? 'Docente' : 'Estudiante';
+            
+            // Cargar imagen si existe
+            if (photo) {
+                document.getElementById('avatar-display').innerHTML = `<img src="${photo}" alt="Avatar">`;
+            }
+        }
+
+        // --- 2. PREVISUALIZAR Y GUARDAR IMAGEN ---
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    // Guardar en localStorage
+                    localStorage.setItem('userPhoto', base64Image);
+                    // Mostrar en el círculo
+                    document.getElementById('avatar-display').innerHTML = `<img src="${base64Image}" alt="Avatar">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- 3. GESTIÓN DE EDICIÓN DE TEXTO ---
+        function toggleEdit(isEditing) {
+            document.getElementById('view-mode').style.display = isEditing ? 'none' : 'block';
+            document.getElementById('edit-mode').style.display = isEditing ? 'block' : 'none';
+
+            if(isEditing) {
+                document.getElementById('input-name').value = document.getElementById('name-val').textContent;
+                document.getElementById('input-email').value = document.getElementById('email-val').textContent;
+            }
+        }
+
+        function saveProfile() {
+            const newName = document.getElementById('input-name').value;
+            const newEmail = document.getElementById('input-email').value;
+
+            if(newName.trim() === "") return alert("El nombre es obligatorio");
+
+            // Guardar en localStorage
+            localStorage.setItem('userName', newName);
+            localStorage.setItem('userEmail', newEmail);
+
+            // Actualizar vista y salir
+            loadData();
+            toggleEdit(false);
+            alert("Perfil actualizado correctamente");
+        }
+    </script>
+</body>
+</html>
