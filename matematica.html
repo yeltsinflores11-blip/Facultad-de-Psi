@@ -1066,16 +1066,21 @@
    // Variable global (colócala afuera de las funciones)
 let estaProcesandoMaterial = false;
 
-function ejecutarPublicacionMaterial() {
-    // 1. EL CANDADO: Si ya se está procesando, salimos de la función inmediatamente
+// Configuración de Cloudinary
+const CLOUD_NAME = "dw9riuani";
+const UPLOAD_PRESET = "trabajo";
+
+async function ejecutarPublicacionMaterial() {
+    // 1. EL CANDADO: Si ya se está procesando, salimos
     if (estaProcesandoMaterial) return;
 
     const btnGuardar = document.getElementById('btnGuardarMaterial');
     const titulo = document.getElementById('matTitleInput').value;
     const fileInput = document.getElementById('fileInput');
+    const archivo = fileInput.files[0];
     
-    if (titulo.trim() === "" || fileInput.files.length === 0) {
-        return alert("Por favor, completa los datos.");
+    if (titulo.trim() === "" || !archivo) {
+        return alert("Por favor, completa los datos y selecciona un PDF.");
     }
 
     // ACTIVAMOS EL CANDADO
@@ -1087,83 +1092,99 @@ function ejecutarPublicacionMaterial() {
         btnGuardar.innerText = "Sincronizando...";
     }
 
-    const nombreArchivo = fileInput.files[0].name;
-
-    // Ejecutamos la carga académica
-    mostrarCargaAcademica("Subiendo material a la plataforma...", () => {
+    // Ejecutamos la carga académica (el efecto visual de carga)
+    mostrarCargaAcademica("Subiendo material a la plataforma...", async () => {
         
-        const nuevoMaterial = {
-            id: Date.now(), // El ID se genera justo aquí
-            titulo: titulo,
-            archivoOriginal: nombreArchivo,
-            fecha: new Date().toLocaleDateString()
-        };
+        try {
+            // --- INICIO DE LA SUBIDA A CLOUDINARY ---
+            const formData = new FormData();
+            formData.append('file', archivo);
+            formData.append('upload_preset', UPLOAD_PRESET);
 
-        // GUARDADO REAL
-        materialesDB.push(nuevoMaterial);
-        localStorage.setItem(`db_materiales_${ID_CURSO}`, JSON.stringify(materialesDB));
-        
-        // Renderizamos y cerramos
-        renderizarMateriales();
-        closeMaterialModal();
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
+                method: 'POST',
+                body: formData
+            });
 
-        // LIBERAMOS EL CANDADO después de un pequeño respiro
-        setTimeout(() => {
-            estaProcesandoMaterial = false;
-            if (btnGuardar) {
-                btnGuardar.disabled = false;
-                btnGuardar.innerText = "Publicar Ahora";
-            }
-        }, 1000);
+            const data = await response.json();
+            const urlFinal = data.secure_url; // Esta es la URL de internet
+
+            if (!urlFinal) throw new Error("No se pudo obtener la URL del archivo");
+            // --- FIN DE LA SUBIDA ---
+
+            const nuevoMaterial = {
+                id: Date.now(),
+                titulo: titulo,
+                archivoOriginal: urlFinal, // GUARDAMOS LA URL REAL DE CLOUDINARY
+                nombreOriginal: archivo.name, // Opcional: guardamos el nombre original por si quieres mostrarlo
+                fecha: new Date().toLocaleDateString()
+            };
+
+            // GUARDADO REAL EN LOCALSTORAGE
+            materialesDB.push(nuevoMaterial);
+            localStorage.setItem(`db_materiales_${ID_CURSO}`, JSON.stringify(materialesDB));
+            
+            // Renderizamos y cerramos
+            renderizarMateriales();
+            closeMaterialModal();
+
+        } catch (error) {
+            console.error("Error en el sistema académico:", error);
+            alert("Hubo un error al subir el archivo a la nube.");
+        } finally {
+            // LIBERAMOS EL CANDADO
+            setTimeout(() => {
+                estaProcesandoMaterial = false;
+                if (btnGuardar) {
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerText = "Publicar Ahora";
+                }
+            }, 1000);
+        }
     });
-
 }
 
     function verPDF(id) {
-        const material = materialesDB.find(m => m.id === id);
-        if (material && material.archivoData) {
-            const nuevaVentana = window.open();
-            // Creamos un iframe que ocupe toda la nueva pestaña con el PDF
-            nuevaVentana.document.write(`
-                <title>${material.titulo}</title>
-                <body style="margin:0;">
-                    <embed src="${material.archivoData}" width="100%" height="100%" type="application/pdf">
-                </body>
-            `);
-        } else {
-            alert("Error: No se pudo abrir el archivo.");
-        }
+    // Buscamos el material en el array
+    const material = materialesDB.find(m => m.id === id);
+
+    // IMPORTANTE: Ahora usamos 'archivoOriginal' que es donde guardamos la URL de Cloudinary
+    if (material && material.archivoOriginal) {
+        // Simplemente abrimos la URL en una nueva pestaña
+        // Esto es mucho más limpio y compatible con GitHub
+        window.open(material.archivoOriginal, '_blank');
+    } else {
+        alert("Error: No se pudo localizar el archivo en el servidor de la UNICA.");
     }
+}
 
     function renderizarMateriales() {
-        const lista = document.getElementById('listaMateriales');
-        const rol = localStorage.getItem('usuarioRol');
+    const lista = document.getElementById('listaMateriales');
+    const rol = localStorage.getItem('usuarioRol');
 
-        if (materialesDB.length === 0) {
-            lista.innerHTML = "<p style='color:gray; text-align:center; padding:20px;'>No hay materiales disponibles.</p>";
-            return;
-        }
-
-        lista.innerHTML = materialesDB.map(m => `
-            <div class="material-card">
-                <div class="material-icon">📕</div>
-                <div class="material-info">
-                    <h4>${m.titulo}</h4>
-                    <p style="color:var(--unica-blue); font-weight:500; font-size:13px; cursor:pointer;" onclick="verPDF(${m.id})">
-                        📄 ${m.archivoOriginal}
-                    </p>
-                    <p style="font-size:11px; opacity:0.7;">Fecha: ${m.fecha}</p>
-                </div>
-                <div style="margin-left:auto; display:flex; gap:10px;">
-                    <button class="btn-download" style="background:none; border:none; cursor:pointer;" onclick="verPDF(${m.id})">👁️</button>
-                    
-                    ${rol !== 'Alumno' ? `<button class="btn-delete-mat" onclick="eliminarMaterial(${m.id})">🗑️</button>` : ''}
-                </div>
-            </div>
-        `).join('');
+    if (materialesDB.length === 0) {
+        lista.innerHTML = "<p style='color:gray; text-align:center; padding:20px;'>No hay materiales disponibles.</p>";
+        return;
     }
 
-    let idMaterialAEliminar = null; // Variable temporal para guardar el ID
+    lista.innerHTML = materialesDB.map(m => `
+        <div class="material-card">
+            <div class="material-icon">📕</div>
+            <div class="material-info">
+                <h4>${m.titulo}</h4>
+                <p style="color:var(--unica-blue); font-weight:500; font-size:13px; cursor:pointer;" onclick="verPDF(${m.id})">
+                    📄 ${m.nombreOriginal || 'Ver documento PDF'}
+                </p>
+                <p style="font-size:11px; opacity:0.7;">Fecha: ${m.fecha}</p>
+            </div>
+            <div style="margin-left:auto; display:flex; gap:10px;">
+                <button class="btn-download" style="background:none; border:none; cursor:pointer;" title="Visualizar" onclick="verPDF(${m.id})">👁️</button>
+                
+                ${rol !== 'Alumno' ? `<button class="btn-delete-mat" style="background:none; border:none; cursor:pointer;" onclick="eliminarMaterial(${m.id})">🗑️</button>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
 
     function eliminarMaterial(id) {
         // 1. Guardamos el ID que queremos borrar
