@@ -646,30 +646,87 @@
 
     <div id="main-content">
     <div id="unidadesContent" class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2 class="unit-title" style="margin-bottom: 0;">Unidades del <span>Curso</span></h2>
-            <button id="btnAgregarUnidad" class="btn-edit-unit" onclick="crearNuevaUnidad()" style="display: none;">➕ Añadir Unidad</button>
-        </div>
+        <h2 class="unit-title">Unidades del <span>Curso</span></h2>
 
-        <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span class="unit-text">UNIDAD 1: NÚMEROS REALES Y FUNCIONES</span>
-                <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
-            </div>
-            <div class="accordion-content">
-                <div class="topic-list">
-                    <div class="topic">
-                        <span class="topic-text">Ecuaciones e Inecuaciones</span>
-                        <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
-                    </div>
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 1: NÚMEROS REALES Y FUNCIONES</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Números reales: conceptos y propiedades</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
                 </div>
-                <div style="padding: 10px 30px; text-align: center;">
-                    <button class="btn-edit-topic btn-add-topic" onclick="crearNuevoTema(this)" style="display: none; width: 100%;">➕ Añadir Tema</button>
+                <div class="topic">
+                    <span class="topic-text">Funciones: definición, dominio y rango</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Ecuaciones e Inecuaciones con Valor Absoluto</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
                 </div>
             </div>
         </div>
-        
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 2: LIMITES DE FUNCIONES</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
         </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Límites de funciones: conceptos básicos</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Límites laterales y continuidad</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 3: DERIVADAS</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Definición de derivada</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Reglas de derivación</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="unit-text">UNIDAD 4: APLICACIONES DE LA DERIVADA</span>
+            <button class="btn-edit-unit" onclick="editUnit(event, this)">⚙️ Editar Unidad</button>
+        </div>
+        <div class="accordion-content">
+            <div class="topic-list">
+                <div class="topic">
+                    <span class="topic-text">Derivadas de orden superior. Regla de L'Hospital</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+                <div class="topic">
+                    <span class="topic-text">Valores máximos y mínimos de una función</span>
+                    <button class="btn-edit-topic" onclick="editTopic(this)">✏️</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="materialesContent" class="container" style="display: none;">
