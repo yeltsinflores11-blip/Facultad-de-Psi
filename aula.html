@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>UNICA - Facultad de Psicología | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -13,7 +14,11 @@
             align-items: center;
             height: 100vh;
             color: white;
+            /* Efecto de entrada suave de la segunda versión */
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
+        body.loaded { opacity: 1; }
 
         .login-box {
             background-color: #24283b;
@@ -28,6 +33,12 @@
         .header-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
         .sub-title { color: #ff8c00; font-size: 0.9rem; margin-bottom: 30px; display: block; }
 
+        .logo-icon {
+            font-size: 40px;
+            color: #ff8c00;
+            margin-bottom: 15px;
+        }
+
         input {
             width: 100%;
             padding: 12px;
@@ -37,7 +48,9 @@
             color: white;
             border-radius: 5px;
             box-sizing: border-box;
+            outline: none;
         }
+        input:focus { border-color: #ff8c00; }
 
         button {
             width: 100%;
@@ -49,7 +62,9 @@
             cursor: pointer;
             font-weight: bold;
             margin-top: 20px;
+            transition: 0.3s;
         }
+        button:hover { background-color: #3b82f6; }
 
         /* Animación de Carga */
         .loader {
@@ -66,80 +81,120 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .error-msg { color: #ff4d4d; font-size: 0.8rem; margin-top: 15px; display: none; }
+
+        .hint-box {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 20px;
+            text-align: left;
+            border-top: 1px solid #3d445e;
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="login-box">
+    <div class="logo-icon"><i class="fas fa-brain"></i></div>
     <div class="header-title">UNIVERSIDAD NACIONAL<br>"SAN LUIS GONZAGA"</div>
     <span class="sub-title">FACULTAD DE PSICOLOGÍA</span>
     
-    <input type="text" id="userCode" placeholder="Código Universitario (Ej: 202401)">
-    <input type="password" id="pass" placeholder="Contraseña">
-    
-    <button id="btnIngresar" onclick="validarAcceso()">INICIAR SESIÓN</button>
+    <form id="loginForm">
+        <input type="text" id="userInput" placeholder="Código (Ej: 202401)" required>
+        <input type="password" id="pass" placeholder="Contraseña" required>
+        
+        <button type="submit" id="btnIngresar">INICIAR SESIÓN</button>
+    </form>
     
     <div id="loader" class="loader"></div>
     <div id="error" class="error-msg">Código no reconocido. Reintente.</div>
+
+    <div class="hint-box">
+        <strong>Ayuda:</strong> Estudiantes (202401 - 202420) / Docente (profesor)
+    </div>
 </div>
 
 <script>
-    // Base de datos completa de la Facultad de Psicología - UNICA
-    const usuarios = [
-        { code: "202401", name: "Chavez, Kaysin", role: "Alumno" },
-        { code: "202402", name: "Aguirre, Tatiana", role: "Alumno" },
-        { code: "202403", name: "Benitez, Jorge", role: "Alumno" },
-        { code: "202404", name: "Castillo, Pedro", role: "Alumno" },
-        { code: "202405", name: "Diaz, Ana", role: "Alumno" },
-        { code: "202406", name: "Espinoza, Luis", role: "Alumno" },
-        { code: "202407", name: "Fernandez, Sofia", role: "Alumno" },
-        { code: "202408", name: "Garcia, Miguel", role: "Alumno" },
-        { code: "202409", name: "Hernandez, Jose", role: "Alumno" },
-        { code: "202410", name: "Iglesias, Carmen", role: "Alumno" },
-        { code: "202411", name: "Jimenez, Raul", role: "Alumno" },
-        { code: "202412", name: "Lopez, Elena", role: "Alumno" },
-        { code: "202413", name: "Martinez, Carlos", role: "Alumno" },
-        { code: "202414", name: "Nuñez, Patricia", role: "Alumno" },
-        { code: "202415", name: "Ortega, David", role: "Alumno" },
-        { code: "202416", name: "Perez, Juan", role: "Alumno" },
-        { code: "202417", name: "Quispe, Rosa", role: "Alumno" },
-        { code: "202418", name: "Ramirez, Fernando", role: "Alumno" },
-        { code: "202419", name: "Sanchez, Lucía", role: "Alumno" },
-        { code: "202420", name: "Torres, Manuel", role: "Alumno" },
-        { code: "profesor", name: "DR. RICARDO PALOMINO", role: "Psicología" }
+    // BASE DE DATOS (Mantenemos la estructura de la función avanzada)
+    const defaultStudents = [
+        { id: 1, code: "202401", name: "Aguirre, Tatiana", role: "Alumno" },
+        { id: 2, code: "202402", name: "Carhuas, Maria", role: "Alumno" },
+        { id: 3, code: "202403", name: "Chavez, Kaysin", role: "Alumno" },
+        { id: 4, code: "202404", name: "Fajardo, Oziel", role: "Alumno" },
+        { id: 5, code: "202405", name: "Flores, Josue", role: "Alumno" },
+        { id: 6, code: "202406", name: "Fernandez, Zenon", role: "Alumno" },
+        { id: 7, code: "202407", name: "Fernandez, Sofia", role: "Alumno" },
+        { id: 8, code: "202408", name: "Garcia, Miguel", role: "Alumno" },
+        { id: 9, code: "202409", name: "Hernandez, Jose", role: "Alumno" },
+        { id: 10, code: "202410", name: "Iglesias, Carmen", role: "Alumno" },
+        { id: 11, code: "202411", name: "Jimenez, Raul", role: "Alumno" },
+        { id: 12, code: "202412", name: "Lopez, Elena", role: "Alumno" },
+        { id: 13, code: "202413", name: "Martinez, Carlos", role: "Alumno" },
+        { id: 14, code: "202414", name: "Nuñez, Patricia", role: "Alumno" },
+        { id: 15, code: "202415", name: "Ortega, David", role: "Alumno" },
+        { id: 16, code: "202416", name: "Perez, Juan", role: "Alumno" },
+        { id: 17, code: "202417", name: "Quispe, Rosa", role: "Alumno" },
+        { id: 18, code: "202418", name: "Ramirez, Fernando", role: "Alumno" },
+        { id: 19, code: "202419", name: "Sanchez, Lucía", role: "Alumno" },
+        { id: 20, code: "202420", name: "Torres, Manuel", role: "Alumno" }
     ];
 
-    function validarAcceso() {
-        const inputCode = document.getElementById('userCode').value;
+    // CARGAR BASE DE DATOS DINÁMICA
+    function getStudentDB() {
+        const stored = localStorage.getItem('global_students_db_v2');
+        return stored ? JSON.parse(stored) : defaultStudents;
+    }
+
+    // Efecto de carga inicial
+    document.addEventListener("DOMContentLoaded", () => document.body.classList.add('loaded'));
+
+    // Lógica principal de acceso
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const input = document.getElementById('userInput').value.trim().toLowerCase();
         const errorDiv = document.getElementById('error');
         const loader = document.getElementById('loader');
         const btn = document.getElementById('btnIngresar');
+        const form = document.getElementById('loginForm');
 
-        // Busca el usuario en el arreglo de arriba
-        const usuarioEncontrado = usuarios.find(u => u.code === inputCode);
+        let usuarioEncontrado = null;
+
+        // 1. VERIFICAR SI ES PROFESOR
+        if (input === 'profesor' || input === 'docente') {
+            usuarioEncontrado = { name: "DR. RICARDO PALOMINO", role: "Psicología", code: "PROFE01" };
+        } else {
+            // 2. BUSCAR EN BASE DE DATOS DE ALUMNOS
+            const currentDB = getStudentDB();
+            usuarioEncontrado = currentDB.find(s => s.code === input);
+        }
 
         if (usuarioEncontrado) {
-            // Si lo encuentra, oculta el botón y muestra la carga
+            // ÉXITO: Animación visual
             errorDiv.style.display = 'none';
-            btn.style.display = 'none';
+            form.style.display = 'none';
             loader.style.display = 'block';
 
-            // Guarda los datos en la memoria del navegador
+            // GUARDAR DATOS (Compatibilidad con ambos Dashboard)
+            localStorage.setItem('userName', usuarioEncontrado.name);
             localStorage.setItem('usuarioNombre', usuarioEncontrado.name);
-            localStorage.setItem('usuarioCodigo', usuarioEncontrado.code);
+            localStorage.setItem('userRole', usuarioEncontrado.role === "Alumno" ? 'student' : 'teacher');
             localStorage.setItem('usuarioRol', usuarioEncontrado.role);
 
-            // Redirige al Dashboard después de 1.5 segundos
+            // Redirigir
             setTimeout(() => {
-                window.location.href = "dashboard.html";
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = "dashboard.html"; // Asegúrate que el nombre de tu archivo sea este
+                }, 500);
             }, 1500);
             
         } else {
-            // Si el código no existe en la lista
+            // ERROR
             errorDiv.style.display = 'block';
             errorDiv.innerText = "Código no reconocido por la Facultad.";
         }
-    }
+    });
 </script>
 
 </body>
