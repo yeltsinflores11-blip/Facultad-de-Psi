@@ -1069,6 +1069,7 @@ let estaProcesandoMaterial = false;
 // Configuración de Cloudinary
 const CLOUD_NAME = "dw9riuani";
 const UPLOAD_PRESET = "trabajo";
+console.log("Respuesta de Cloudinary:", data)
 
 async function ejecutarPublicacionMaterial() {
     // 1. EL CANDADO: Si ya se está procesando, salimos
@@ -1101,12 +1102,15 @@ async function ejecutarPublicacionMaterial() {
             formData.append('file', archivo);
             formData.append('upload_preset', UPLOAD_PRESET);
 
+            
+
             const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
-                method: 'POST',
-                body: formData
+    method: 'POST',
+    body: formData
             });
 
             const data = await response.json();
+            console.log("Respuesta de Cloudinary:", data);
             const urlFinal = data.secure_url; // Esta es la URL de internet
 
             if (!urlFinal) throw new Error("No se pudo obtener la URL del archivo");
@@ -1145,17 +1149,23 @@ async function ejecutarPublicacionMaterial() {
 }
 
     function verPDF(id) {
-    // Buscamos el material en el array
+    // Buscamos el material en nuestra lista cargada
     const material = materialesDB.find(m => m.id === id);
-
-    // IMPORTANTE: Ahora usamos 'archivoOriginal' que es donde guardamos la URL de Cloudinary
+    
     if (material && material.archivoOriginal) {
-        // Simplemente abrimos la URL en una nueva pestaña
-        // Esto es mucho más limpio y compatible con GitHub
-        window.open(material.archivoOriginal, '_blank');
+        // Imprimimos en consola para ver qué estamos intentando abrir
+        console.log("Abriendo desde Cloudinary:", material.archivoOriginal);
+        
+        // Abrimos en una pestaña nueva
+        const nuevaVentana = window.open(material.archivoOriginal, '_blank');
+        
+        if (!nuevaVentana) {
+            alert("Por favor, permite las ventanas emergentes para ver el PDF.");
+        }
     } else {
-        alert("Error: No se pudo localizar el archivo en el servidor de la UNICA.");
+        alert("Archivo no encontrado. Por favor, elimínalo y sube uno nuevo.");
     }
+
 }
 
     function renderizarMateriales() {
@@ -1274,7 +1284,7 @@ async function ejecutarPublicacionMaterial() {
         </div>
         <div class="tarea-actions" style="display: flex; gap: 10px;">
             ${rol === 'Alumno' && t.estado === 'Pendiente' ? 
-                `<button class="btn-save" style="font-size: 11px; padding: 8px 12px;" onclick="entregarTarea(${t.id})">Subir Trabajo</button>` : ''}
+                `<button class="btn-save" style="font-size: 11px; padding: 8px 12px;" onclick="entregarTarea(${t.id})">Subir trabajo</button>` : ''}
             
            
             ${rol !== 'Alumno' ? 
