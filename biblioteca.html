@@ -4,190 +4,276 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Digital | Facultad de Psicología UNICA</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS - Identidad Visual Aula Virtual UNICA */
+        /* --- VARIABLES DEL DASHBOARD --- */
         :root {
-            --unica-blue: #1a1d29;       /* Azul profundo de nuestra aula */
-            --unica-blue-light: #2d324d; /* Azul para tarjetas */
-            --unica-orange: #f39c12;     /* Naranja institucional */
-            --bg-body: #13151f;          /* Fondo oscuro */
-            --text-light: #ffffff;
-            --text-gray: #a0a0a0;
+            --bg-dark: #1e293b;        /* Fondo principal oscuro */
+            --sidebar-bg: #0f172a;    /* Fondo lateral más oscuro */
+            --card-white: #ffffff;
+            --unica-red: #D32F2F;      /* Rojo para nombres y acentos */
+            --unica-orange: #f59e0b;   /* Naranja para barras laterales y acentos */
+            --unica-blue: #3b82f6;     /* Azul complementario */
+            --text-gray: #64748b;
+            --text-dark: #1e293b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-light);
+            background-color: var(--bg-dark);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden; /* Evita doble scroll */
+            color: white;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR) --- */
+        .sidebar {
+            width: 85px;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 0;
+            gap: 25px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            color: var(--unica-orange);
+            transform: translateX(3px);
+        }
+
+        .sidebar a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--unica-orange);
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
         header {
-            background-color: var(--unica-blue);
-            color: white;
-            padding: 1.2rem 0;
-            border-bottom: 2px solid var(--unica-orange);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-
-        .header-contenido {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
         }
 
-        .header-texto h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .header-texto h1 span {
-            color: var(--unica-orange);
+        .logo-section i { color: var(--unica-orange); font-size: 2.2rem; }
+        .logo-section h1 { margin: 0; font-size: 1.8rem; color: var(--unica-red); font-weight: 800; letter-spacing: -1px; }
+        .logo-section span { color: #cbd5e1; font-weight: 300; font-size: 1.5rem; }
+
+        /* --- DROPDOWN DE USUARIO --- */
+        .user-dropdown { position: relative; display: inline-block; }
+        
+        .user-info {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.05); padding: 8px 18px;
+            border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer; transition: 0.3s;
+        }
+        .user-info:hover { background: rgba(255,255,255,0.1); }
+        .user-text { display: flex; flex-direction: column; align-items: flex-end; }
+        #user-name { color: var(--unica-red); font-weight: 700; font-size: 0.85rem; }
+        .user-role { color: var(--text-gray); font-size: 0.7rem; }
+        .user-avatar {
+            width: 35px; height: 35px; background: var(--unica-red);
+            color: white; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center;
         }
 
-        /* Botón estilo menú del aula */
-        .btn-menu-top {
-            background-color: transparent;
-            color: var(--text-light) !important;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-weight: 500;
-            border: 1px solid var(--unica-orange);
-            transition: all 0.3s ease;
+        .dropdown-menu {
+            position: absolute; top: 110%; right: 0;
+            background: white; min-width: 180px; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); list-style: none;
+            padding: 8px 0; margin: 0; display: none;
+            z-index: 1000; border: 1px solid #e2e8f0;
         }
-
-        .btn-menu-top:hover {
-            background-color: var(--unica-orange);
-            color: white !important;
+        .user-dropdown:hover .dropdown-menu { display: block; animation: fadeIn 0.2s ease-out; }
+        .dropdown-menu li a {
+            padding: 12px 20px; text-decoration: none; color: #334155;
+            font-size: 0.9rem; display: flex; align-items: center;
+            gap: 10px; transition: 0.2s;
         }
+        .dropdown-menu li a:hover { background-color: #f1f5f9; color: var(--unica-red); }
+        .dropdown-menu hr { margin: 5px 0; border: 0; border-top: 1px solid #f1f5f9; }
 
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Buscador estilizado como el aula */
+        /* --- SECCIÓN BUSCADOR --- */
         .buscador-panel {
-            background: var(--unica-blue);
+            background: var(--card-white);
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 2.5rem;
-            border: 1px solid var(--unica-blue-light);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         #busqueda {
             width: 100%;
-            padding: 15px;
-            background-color: #0f111a;
-            border: 1px solid #333;
-            color: white;
+            padding: 15px 20px;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: var(--text-dark);
             border-radius: 8px;
             font-size: 1rem;
             outline: none;
             box-sizing: border-box;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         #busqueda:focus {
             border-color: var(--unica-orange);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
         }
 
-        /* Grid de Libros estilo "Materiales" */
-        .grid-libros {
+        /* --- GRID DE LIBROS (Adaptado de Dashboard) --- */
+        .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
         }
 
-        .tarjeta-psi {
-            background: var(--unica-blue-light);
-            border-left: 4px solid var(--unica-orange);
-            padding: 1.5rem;
-            border-radius: 8px;
+        .course-card {
+            background: var(--card-white);
+            border-radius: 16px;
+            display: flex;
+            height: 190px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .card-stripe {
+            width: 55px;
+            display: flex;
+            justify-content: center;
+            padding-top: 25px;
+            color: white;
+            font-size: 1.3rem;
+        }
+        .bg-orange { background: var(--unica-orange); }
+        .bg-blue { background: var(--unica-blue); }
+        .bg-red { background: var(--unica-red); }
+
+        .card-content {
+            flex: 1;
+            padding: 22px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s, background 0.3s;
+            color: var(--text-dark);
         }
 
-        .tarjeta-psi:hover {
-            transform: translateX(5px);
-            background: #363c5a;
-        }
-
-        .area-tag {
+        .card-tag {
             font-size: 0.7rem;
-            background: rgba(243, 156, 18, 0.2);
-            color: var(--unica-orange);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
+            font-weight: 800;
             text-transform: uppercase;
-            align-self: flex-start;
-            margin-bottom: 12px;
+            color: var(--unica-blue);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .titulo-pdf {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin: 5px 0;
-            color: var(--text-light);
-            text-decoration: none;
-            line-height: 1.4;
+        .card-content h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--unica-red);
+            line-height: 1.3;
+            height: 45px;
+            overflow: hidden;
         }
 
-        .titulo-pdf:hover {
-            color: var(--unica-orange);
-        }
-
-        .autor {
+        .card-content p.autor {
+            margin: 8px 0;
             font-size: 0.85rem;
             color: var(--text-gray);
-            margin: 10px 0 20px 0;
+            font-weight: 500;
         }
 
-        .btn-descarga {
-            text-align: center;
-            padding: 10px;
-            background-color: transparent;
-            color: var(--unica-orange);
-            border: 1px solid var(--unica-orange);
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: 0.3s;
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
         }
 
-        .btn-descarga:hover {
-            background-color: var(--unica-orange);
+        .btn-enter {
+            background: var(--bg-dark);
             color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Formulario estilo "Aula Virtual" */
+        .btn-enter:hover {
+            background: var(--unica-orange);
+            transform: scale(1.05);
+        }
+
+        /* --- FORMULARIO DE CONTACTO --- */
         .seccion-contacto {
-            background: var(--unica-blue);
+            background: var(--card-white);
             margin-top: 4rem;
             padding: 2.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--unica-blue-light);
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .seccion-contacto h2 {
             color: var(--unica-orange);
-            text-align: left;
             font-size: 1.5rem;
+            margin-top: 0;
             margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .form-grupo {
+            margin-bottom: 15px;
         }
 
         label {
@@ -195,89 +281,247 @@
             margin-bottom: 8px;
             font-size: 0.9rem;
             color: var(--text-gray);
+            font-weight: 600;
         }
 
         input[type="email"], textarea, select {
             width: 100%;
             padding: 12px;
-            background: #0f111a;
-            border: 1px solid #333;
-            color: white;
-            border-radius: 6px;
-            margin-bottom: 15px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: var(--text-dark);
+            border-radius: 8px;
             box-sizing: border-box;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--unica-blue);
+            outline: none;
         }
 
         .btn-enviar {
-            background-color: var(--unica-orange);
+            background-color: var(--unica-red);
             color: white;
             padding: 12px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
             width: 100%;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         .btn-enviar:hover {
-            background-color: var(--unica-orange-hover);
-            transform: scale(1.01);
+            background-color: #b71c1c;
+            transform: translateY(-2px);
         }
 
         footer {
             text-align: center;
-            padding: 3rem;
+            padding: 2rem 0;
             color: var(--text-gray);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--unica-blue-light);
-            margin-top: 4rem;
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        @media (max-width: 600px) {
-            .header-contenido { flex-direction: column; gap: 10px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: 60px; flex-direction: row; justify-content: space-around; padding: 0; position: fixed; bottom: 0; z-index: 100; }
+            .main-content { padding: 20px; padding-bottom: 80px; }
+            .courses-grid { grid-template-columns: 1fr; }
+            .dropdown-menu { bottom: 110%; top: auto; right: 10px; }
+        }
+
+        /* --- ESTILOS DEL LOADER Y MODAL --- */
+#loading-overlay, #success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85); /* Fondo oscuro transparente */
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay-oculto, .modal-oculto {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.overlay-visible, .modal-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Spinner animado */
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--unica-orange);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#loading-overlay p {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Contenido del Modal */
+.modal-content {
+    background: var(--card-white);
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.modal-visible .modal-content {
+    transform: translateY(0);
+}
+
+.modal-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+    margin: 0 auto 20px auto;
+}
+
+.modal-content h3 {
+    color: var(--text-dark);
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+}
+
+.modal-content p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.modal-content .btn-enter {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 12px;
+}
     </style>
 </head>
 <body>
+    
+    <nav class="sidebar">
+        <a href="dashboard.html" title="Inicio"><i class="fas fa-th-large"></i></a>
+        <a href="tramites.html" title="Tramites"><i class="fas fa-graduation-cap"></i></a>
+        <a href="biblioteca.html" title="Biblioteca Virtual" class="active"><i class="fas fa-book"></i></a>
+        <a href="perfil.html" title="Mi Perfil"><i class="fas fa-user-circle"></i></a>
+        <a href="aula.html" title="Cerrar Sesión" style="margin-top: auto; margin-bottom: 20px;"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
-    <header>
-        <div class="header-contenido">
-            <div class="header-texto">
-                <h1>UNICA | <span>Psicología Digital</span></h1>
-            </div>
-            <a href="dashboard.html" class="btn-menu-top"><i class="fas fa-home"></i> Ir al Menú</a>
-        </div>
-    </header>
-
-    <div class="container">
+    <div class="main-content">
         
+        <header>
+            <div class="logo-section">
+                <i class="fas fa-university"></i>
+                <h1>UNICA <span>Psicología</span></h1>
+            </div>
+
+            <div class="user-dropdown">
+                <div class="user-info">
+                    <div class="user-text">
+                        <span id="user-name">ESTUDIANTE UNICA</span>
+                        <span class="user-role">Psicología</span>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+                <menu class="dropdown-menu">
+                    <li><a href="perfil.html"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
+                    <li><a href="ajustes.html"><i class="fas fa-id-card"></i> Expediente</a></li>
+                    <hr>
+                    <li><a href="aula.html" style="color: #D32F2F;"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                </menu>
+            </div>
+        </header>
+
+        <h2 style="margin-bottom: 30px; font-weight: 300;">Biblioteca <span style="font-weight: 700; color: var(--unica-orange);">Virtual</span></h2>
+
         <div class="buscador-panel">
             <input type="text" id="busqueda" placeholder="🔍 Buscar por especialidad, título o autor..." onkeyup="filtrar()">
         </div>
 
-        <div class="grid-libros" id="listaLibros">
-            <div class="tarjeta-psi" data-area="Clínica">
-                <span class="area-tag">Psicología Clínica</span>
-                <a href="https://repositorio.unica.edu.pe/items/3b13cd15-e8b1-4d51-a35b-d2aec3931535" class="titulo-pdf" target="_blank">Ansiedad y trastornos del sueño en estudiantes de la UNICA</a>
-                <p class="autor">Investigadores UNICA (2023)</p>
-                <a href="https://repositorio.unica.edu.pe/items/3b13cd15-e8b1-4d51-a35b-d2aec3931535" class="btn-descarga" target="_blank"><i class="fas fa-eye"></i> Leer Documento</a>
+        <div class="courses-grid" id="listaLibros">
+            
+            <div class="course-card tarjeta-psi">
+                <div class="card-stripe bg-orange"><i class="fas fa-book-medical"></i></div>
+                <div class="card-content">
+                    <div class="card-tag"><span>Psicología Clínica</span></div>
+                    <h3>Ansiedad y trastornos del sueño en estudiantes de la UNICA</h3>
+                    <p class="autor"><i class="fas fa-user-edit"></i> Investigadores UNICA (2023)</p>
+                    <div class="card-footer">
+                        <a href="https://repositorio.unica.edu.pe/items/3b13cd15-e8b1-4d51-a35b-d2aec3931535" class="btn-enter" target="_blank"><i class="fas fa-eye"></i> LEER</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="tarjeta-psi" data-area="Educativa">
-                <span class="area-tag">Psicología Educativa</span>
-                <a href="https://repositorio.unica.edu.pe/items/52a44d22-6e7b-4f9e-bdd1-a8d962bd121b" class="titulo-pdf" target="_blank">Estrés académico y bienestar psicológico en Ica</a>
-                <p class="autor">Facultad de Psicología (2022)</p>
-                <a href="https://repositorio.unica.edu.pe/items/52a44d22-6e7b-4f9e-bdd1-a8d962bd121b" class="btn-descarga" target="_blank"><i class="fas fa-eye"></i> Leer Documento</a>
+            <div class="course-card tarjeta-psi">
+                <div class="card-stripe bg-blue"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="card-content">
+                    <div class="card-tag"><span>Psicología Educativa</span></div>
+                    <h3>Estrés académico y bienestar psicológico en Ica</h3>
+                    <p class="autor"><i class="fas fa-user-edit"></i> Facultad de Psicología (2022)</p>
+                    <div class="card-footer">
+                        <a href="https://repositorio.unica.edu.pe/items/52a44d22-6e7b-4f9e-bdd1-a8d962bd121b" class="btn-enter" target="_blank"><i class="fas fa-eye"></i> LEER</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="tarjeta-psi" data-area="Clínica">
-                <span class="area-tag">Clínica / Social</span>
-                <a href="https://repositorio.unica.edu.pe/items/0a1f2806-77b2-4e3e-95a0-c9159f0c41a9" class="titulo-pdf" target="_blank">Estilos de apego y dependencia emocional</a>
-                <p class="autor">Tesis de Licenciatura UNICA</p>
-                <a href="https://repositorio.unica.edu.pe/items/0a1f2806-77b2-4e3e-95a0-c9159f0c41a9" class="btn-descarga" target="_blank"><i class="fas fa-eye"></i> Leer Documento</a>
+            <div class="course-card tarjeta-psi">
+                <div class="card-stripe bg-red"><i class="fas fa-users-cog"></i></div>
+                <div class="card-content">
+                    <div class="card-tag"><span>Clínica / Social</span></div>
+                    <h3>Estilos de apego y dependencia emocional</h3>
+                    <p class="autor"><i class="fas fa-user-edit"></i> Tesis de Licenciatura UNICA</p>
+                    <div class="card-footer">
+                        <a href="https://repositorio.unica.edu.pe/items/0a1f2806-77b2-4e3e-95a0-c9159f0c41a9" class="btn-enter" target="_blank"><i class="fas fa-eye"></i> LEER</a>
+                    </div>
+                </div>
             </div>
+
         </div>
 
         <div class="seccion-contacto">
@@ -301,26 +545,99 @@
                     <label>¿Qué recurso necesitas?</label>
                     <textarea rows="4" placeholder="Indica título, autor o tema específico..."></textarea>
                 </div>
-                <button type="button" class="btn-enviar" onclick="alert('Solicitud enviada a la Biblioteca UNICA')">Enviar Solicitud</button>
-            </form>
+                <button type="submit" class="btn-enviar"><i class="fas fa-paper-plane"></i> Enviar Solicitud</button>
         </div>
+
+        <footer>
+            <p>© 2026 Universidad Nacional San Luis Gonzaga - Facultad de Psicología</p>
+            <p>Sistema Académico Digital | Ica, Perú</p>
+        </footer>
+
     </div>
 
-    <footer>
-        <p>© 2026 Universidad Nacional San Luis Gonzaga - Facultad de Psicología</p>
-        <p>Sistema Académico Digital | Ica, Perú</p>
-    </footer>
+    <div id="loading-overlay" class="overlay-oculto">
+    <div class="loader-spinner"></div>
+    <p>Procesando solicitud...</p>
+</div>
+
+<div id="success-modal" class="modal-oculto">
+    <div class="modal-content">
+        <div class="modal-icon bg-orange">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>¡Solicitud Enviada!</h3>
+        <p>Tu petición ha sido registrada. La Biblioteca Virtual de la Facultad revisará tu solicitud y te notificará al correo institucional.</p>
+        <button type="button" id="btn-cerrar-modal" class="btn-enter">Entendido</button>
+    </div>
+</div>
 
     <script>
-        // Mantenemos tu función original intacta
+        // Cargar nombre de usuario desde localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            const name = localStorage.getItem('userName') || 'ESTUDIANTE UNICA';
+            document.getElementById('user-name').innerText = name.toUpperCase();
+
+            // Animación de entrada para las tarjetas
+            const cards = document.querySelectorAll('.course-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Funcionalidad intacta del buscador
         function filtrar() {
             let input = document.getElementById('busqueda').value.toLowerCase();
             let tarjetas = document.getElementsByClassName('tarjeta-psi');
             for (let t of tarjetas) {
-                t.style.display = t.innerText.toLowerCase().includes(input) ? "flex" : "none";
+                // Comprobamos el texto dentro de la tarjeta
+                let textoTarjeta = t.innerText.toLowerCase();
+                t.style.display = textoTarjeta.includes(input) ? "flex" : "none";
             }
         }
+
+        // --- LÓGICA DEL FORMULARIO, LOADER Y MODAL ---
+document.getElementById('solicitudForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita que la página se recargue
+
+    const loader = document.getElementById('loading-overlay');
+    const modal = document.getElementById('success-modal');
+    const form = this;
+
+    // 1. Mostrar la pantalla de carga
+    loader.classList.remove('overlay-oculto');
+    loader.classList.add('overlay-visible');
+
+    // 2. Simular el tiempo de envío (2 segundos)
+    setTimeout(() => {
+        // Ocultar carga
+        loader.classList.remove('overlay-visible');
+        loader.classList.add('overlay-oculto');
+
+        // Mostrar Modal de éxito
+        modal.classList.remove('modal-oculto');
+        modal.classList.add('modal-visible');
+
+        // Limpiar el formulario
+        form.reset();
+    }, 2000);
+});
+
+// Cerrar el modal correctamente
+document.getElementById('btn-cerrar-modal').addEventListener('click', function(e) {
+    e.preventDefault(); // Por seguridad extra
+    const modal = document.getElementById('success-modal');
+    modal.classList.remove('modal-visible');
+    modal.classList.add('modal-oculto');
+
+});
     </script>
+
 
 </body>
 </html>
