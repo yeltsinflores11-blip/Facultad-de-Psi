@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trámites Académicos | Facultad de Psicología UNICA</title>
+    <link rel="icon" href="https://campus.unica.edu.pe/images/themes/unica/logo-report.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES GLOBALES (Mantenemos tu estilo) --- */
+        :root {
+            --bg-dark: #1e293b;
+            --sidebar-bg: #0f172a;
+            --card-white: #ffffff;
+            --unica-red: #D32F2F;
+            --unica-orange: #f59e0b;
+            --unica-blue: #3b82f6;
+            --text-gray: #64748b;
+            --text-dark: #1e293b;
+            --status-green: #10b981;
+            --status-yellow: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* --- BARRA LATERAL --- */
+        .sidebar {
+            width: 85px;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 0;
+            gap: 25px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 1.4rem;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .sidebar a:hover, .sidebar a.active { color: var(--unica-orange); }
+        .sidebar a.active::before {
+            content: ''; position: absolute; left: 0; height: 100%; width: 4px;
+            background: var(--unica-orange); border-radius: 0 4px 4px 0;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .logo-section { display: flex; align-items: center; gap: 15px; }
+        .logo-section i { color: var(--unica-orange); font-size: 2.2rem; }
+        .logo-section h1 { margin: 0; font-size: 1.8rem; color: var(--unica-red); font-weight: 800; }
+
+        /* --- DROPDOWN USUARIO --- */
+        .user-info {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.05); padding: 8px 18px;
+            border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .user-text { display: flex; flex-direction: column; align-items: flex-end; }
+        #user-name { color: var(--unica-red); font-weight: 700; font-size: 0.85rem; }
+
+        /* --- TABLA DE ESTADOS --- */
+        .status-container {
+            background: var(--card-white);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .status-container h3 { margin-top: 0; font-size: 1.2rem; color: var(--bg-dark); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th { text-align: left; color: var(--text-gray); padding: 12px; border-bottom: 2px solid #f1f5f9; }
+        td { padding: 12px; border-bottom: 1px solid #f1f5f9; }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-process { background: #fff7ed; color: #9a3412; }
+        .badge-success { background: #ecfdf5; color: #065f46; }
+
+        /* --- GRID DE TRÁMITES --- */
+        .tramites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tramite-card {
+            background: var(--card-white);
+            border-radius: 16px;
+            padding: 25px;
+            color: var(--text-dark);
+            transition: 0.3s;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tramite-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.3); }
+
+        .tramite-icon {
+            width: 50px; height: 50px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: white;
+        }
+
+        .tramite-card h4 { margin: 0; font-size: 1.1rem; color: var(--unica-red); }
+        .tramite-card p { margin: 0; font-size: 0.85rem; color: var(--text-gray); line-height: 1.4; }
+
+        .btn-tramite {
+            background: var(--bg-dark);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .btn-tramite:hover { background: var(--unica-orange); }
+
+        /* --- MODAL Y OVERLAY --- */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 1000;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .loader {
+            width: 45px; height: 45px; border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: var(--unica-orange); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: 60px; flex-direction: row; position: fixed; bottom: 0; z-index: 100; padding: 0; }
+            .main-content { padding: 20px; padding-bottom: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <a href="dashboard.html" title="Inicio"><i class="fas fa-th-large"></i></a>
+        <a href="tramites.html" title="Trámites" class="active"><i class="fas fa-graduation-cap"></i></a>
+        <a href="biblioteca.html" title="Biblioteca"><i class="fas fa-book"></i></a>
+        <a href="perfil.html" title="Perfil"><i class="fas fa-user-circle"></i></a>
+        <a href="login.html" style="margin-top: auto; margin-bottom: 20px;"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <div class="logo-section">
+                <i class="fas fa-university"></i>
+                <h1>UNICA <span>Psicología</span></h1>
+            </div>
+            <div class="user-info">
+                <div class="user-text">
+                    <span id="user-name">CARGANDO...</span>
+                    <span style="font-size: 0.7rem; color: var(--text-gray);">Pregrado 2026</span>
+                </div>
+                <div style="width: 35px; height: 35px; background: var(--unica-red); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+            </div>
+        </header>
+
+        <h2 style="font-weight: 300; margin-bottom: 30px;">Gestión de <span style="font-weight: 700; color: var(--unica-orange);">Trámites</span></h2>
+
+        <div class="status-container">
+            <h3><i class="fas fa-tasks" style="color: var(--unica-blue); margin-right: 10px;"></i> Mis Solicitudes Recientes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trámite</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Carnet Universitario 2026</td>
+                        <td>15/02/2026</td>
+                        <td><span class="badge badge-process">En Revisión</span></td>
+                        <td><i class="fas fa-search" style="cursor:pointer; color: var(--unica-blue);"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Constancia de Matrícula</td>
+                        <td>10/02/2026</td>
+                        <td><span class="badge badge-success">Finalizado</span></td>
+                        <td><i class="fas fa-download" style="cursor:pointer; color: var(--unica-red);"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tramites-grid">
+            
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #4f46e5;"><i class="fas fa-id-card"></i></div>
+                <h4>Carnet Universitario</h4>
+                <p>Solicita la renovación o duplicado de tu carnet para el presente año académico 2026.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Carnet Universitario')">Iniciar Solicitud</button>
+            </div>
+
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #0891b2;"><i class="fas fa-file-invoice"></i></div>
+                <h4>Certificado de Estudios</h4>
+                <p>Obtén el registro oficial de tus calificaciones por ciclo o de toda la carrera.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Certificado de Estudios')">Solicitar Documento</button>
+            </div>
+
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #059669;"><i class="fas fa-user-check"></i></div>
+                <h4>Constancia de Matrícula</h4>
+                <p>Genera el documento que acredita que te encuentras matriculado en el ciclo actual.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Constancia de Matrícula')">Generar Ahora</button>
+            </div>
+
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #ea580c;"><i class="fas fa-calendar-minus"></i></div>
+                <h4>Reserva de Matrícula</h4>
+                <p>Gestiona la suspensión temporal de tus estudios por motivos personales o de salud.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Reserva de Matrícula')">Iniciar Proceso</button>
+            </div>
+
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #dc2626;"><i class="fas fa-graduation-cap"></i></div>
+                <h4>Grado y Título</h4>
+                <p>Expediente para la obtención de grado académico de Bachiller o Título Profesional.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Grado y Título')">Ver Requisitos</button>
+            </div>
+
+            <div class="tramite-card">
+                <div class="tramite-icon" style="background: #7c3aed;"><i class="fas fa-exchange-alt"></i></div>
+                <h4>Convalidaciones</h4>
+                <p>Trámite para el reconocimiento de cursos aprobados en otras facultades o universidades.</p>
+                <button class="btn-tramite" onclick="iniciarTramite('Convalidación')">Consultar Guía</button>
+            </div>
+
+        </div>
+
+        <footer style="margin-top: 50px; text-align: center; color: var(--text-gray); font-size: 0.8rem;">
+            <p>© 2026 Universidad Nacional San Luis Gonzaga | Facultad de Psicología</p>
+        </footer>
+    </div>
+
+    <div id="loading-overlay">
+        <div class="loader"></div>
+        <p id="loader-text" style="color: white; font-weight: 500;">Conectando con el servidor UNICA...</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const name = localStorage.getItem('userName') || 'ESTUDIANTE UNICA';
+            document.getElementById('user-name').innerText = name.toUpperCase();
+        });
+
+        function iniciarTramite(tipo) {
+            const overlay = document.getElementById('loading-overlay');
+            const loaderText = document.getElementById('loader-text');
+            
+            overlay.style.display = 'flex';
+            loaderText.innerText = `Abriendo expediente: ${tipo}...`;
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                alert(`Has iniciado el trámite de: ${tipo}. \n\nPor favor, sube los requisitos en formato PDF en la siguiente pantalla (Simulación).`);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
